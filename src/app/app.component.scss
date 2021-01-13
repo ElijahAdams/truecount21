@@ -1,0 +1,27 @@
+.header { grid-area: header; }
+.dealer { grid-area: dealer; }
+.player1 { grid-area: player1; }
+.player2 { grid-area: player2; }
+.player3 { grid-area: player3; }
+.player4 { grid-area: player4; }
+
+
+.grid-container {
+  height: 90%;
+  display: grid;
+  grid-template-areas:
+    'header header header header'
+    'blank dealer dealer blank2'
+    'player1 blank3 blank4 player4'
+    'blank5 player2 player3 blank6';
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(39, 255, 40, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
