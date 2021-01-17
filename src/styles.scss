@@ -1,9 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
-html, body{
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap');
+html{
   height: 100%;
-  margin: 0;
+  background-color: #294414;
+}
+
+body {
+  height: 90%;
+  font-family: 'Teko', sans-serif;
 }
 
 p {
   margin: 0;
+}
+
+h2 {
+  margin: 10px 0 10px 0;
 }

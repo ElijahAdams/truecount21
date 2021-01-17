@@ -1,4 +1,12 @@
-<span *ngFor="let card of hand">
+<div class="playerTotal" *ngIf="player.hand.length > 0">
+  <span >Total {{determineTotal(player.hand)}}</span>
+</div>
+<span *ngFor="let card of player.hand">
   <img src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
 </span>
-<div *ngIf="hand.length > 0">total {{hand.reduce(addCards, {value: 0}).value}}</div>
+<div *ngIf="!player.isDealer && playerOptions.anyOptions && isCurrentPlayer && actionReady">
+  <button *ngIf="playerOptions.hit" (click)="hitPlayer()">Hit</button>
+  <button (click)="stay()">Stay</button>
+  <button *ngIf="playerOptions.split">Split</button>
+</div>
+

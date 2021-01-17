@@ -1,25 +1,23 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="grid-container">
-  <div class="header">True Count 21
+  <div>
+    <h1>True Count 21</h1>
     <div *ngIf="!hasStarted">
       <button (click)="startRound()">start</button>
     </div>
   </div>
   <div class="dealer">
-    <p>Dealer</p>
-    <app-playing-hand [hand]="dealer.hand"></app-playing-hand>
+    <h2>Dealer</h2>
+    <app-playing-hand [player]="dealer" ></app-playing-hand>
     <div *ngIf="0 === currentPlayerTurn">
-    <button (click)="determineAbility()">progress</button>
   </div>
 
   </div>
-  <div *ngFor="let player of players"  class="player{{player.num}}">
-    <p>P-{{player.num}}</p>
-    <app-playing-hand [hand]="player.hand"></app-playing-hand>
-<!--    <div *ngIf="player.num === currentPlayerTurn">-->
-<!--      hit/stay-->
-<!--      <button (click)="determineAbility()">progress</button>-->
-<!--    </div>-->
+  <div class="players">
+    <div *ngFor="let player of players">
+      <h2 class="playerTitle">P-{{player.num}}</h2>
+      <app-playing-hand [player]="player" (nextPlayerTurn)="nextPlayerTurn()" (hit)="hit($event)"></app-playing-hand>
+    </div>
   </div>
 </div>
 

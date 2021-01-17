@@ -1,5 +1,6 @@
 /* tslint:disable:no-trailing-whitespace */
 import {Component, OnInit} from '@angular/core';
+import {DealingService} from './dealing.service';
 
 @Component({
   selector: 'app-root',
@@ -15,19 +16,23 @@ export class AppComponent implements OnInit {
     4. deal 2nd card to dealer face up
    */
   dealer = {
-    hand: []
+    hand: [],
+    isDealer : true
   };
   players = [
     {num: 1, hand: []},
     {num: 2, hand: []},
-    {num: 3, hand: []},
-    {num: 4, hand: []},
+    {num: 3, hand: []}
     ];
   currentPlayerTurn = 1;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
   sixDeckCardArray = [];
   hasStarted = false;
+  actionReady = false;
+  constructor(private dealingService: DealingService) {
+
+  }
   ngOnInit() {
     this.populateDeck();
   }
@@ -35,9 +40,7 @@ export class AppComponent implements OnInit {
     let newCard;
     this.singleDeckCardArray.forEach(card => {
       for (let i = 0; i < 6; i++) {
-
         const value = isNaN(parseInt(card, 10)) ? this.getCardValue(card) : parseInt(card, 10);
-
         this.suites.forEach(suite => {
           newCard = {
             card,
@@ -72,6 +75,9 @@ export class AppComponent implements OnInit {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
+    this.actionReady = true;
+    this.dealingService.finishedInitialDeal.next( this.actionReady);
+    this.dealingService.currentPlayerTurn.next( this.currentPlayerTurn );
   }
 
   async delayedCardDeal(player) {
@@ -79,20 +85,30 @@ export class AppComponent implements OnInit {
     player.hand.push(this.deal());
   }
 
+  async delayedCardDealFake(player) {
+    await this.delay();
+    player.hand.push(
+      {
+      card: 'A',
+      suite: 'spades',
+      value: 11
+      }
+    );
+  }
+
   delay() {
     return new Promise(resolve => setTimeout(resolve, 700));
   }
+
   randomCard(max) {
-    // card a random number between the indicies of available card. 0 through 311 -1 for each card removed.
+    // grab random number between the indicies of available cards. 0 through 311 -1 for each card removed.
     return Math.floor(Math.random() * Math.floor(max));
   }
-  hit() {
-    // take a hit card
+
+  hit(event) {
+    this.players[event - 1].hand.push(this.deal());
   }
 
-  stay() {
-    // do not take a hit card
-  }
   deal() {
     // remainding card must be greater than 1 to deal mathmetically. but greater than 40 for black jack game.
     const dealtCardIndex = this.randomCard(this.sixDeckCardArray.length);
@@ -100,12 +116,14 @@ export class AppComponent implements OnInit {
     this.sixDeckCardArray.splice(dealtCardIndex, 1);
     return cardDelt;
   }
-  determineAbility() {
-    this.deal();
-    if (this.currentPlayerTurn === 4) {
+
+  nextPlayerTurn() {
+    if (this.currentPlayerTurn === 3) {
       this.currentPlayerTurn = 0;
     } else {
       this.currentPlayerTurn++;
     }
+    this.dealingService.currentPlayerTurn.next(this.currentPlayerTurn);
   }
+
 }

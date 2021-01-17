@@ -1,31 +1,22 @@
-
-.header { grid-area: header; }
-.dealer { grid-area: dealer; }
-.player1 { grid-area: player1; }
-.player2 { grid-area: player2; }
-.player3 { grid-area: player3; }
-.player4 { grid-area: player4; }
-
 .grid-container {
-  height: 100%;
   display: grid;
-  grid-template-areas:
-    'header header header header'
-    'blank dealer dealer blank2'
-    'player1 player2 player3 player4';
+  grid-template-rows: 100px 1fr 1fr;
+  grid-gap: 25px;
+  text-align: center;
+  height: 100%;
+}
+.players {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 10px;
-  background-color: #294414;
-  padding: 10px;
+  min-height: 250px;
 }
 
-.grid-container > div {
-  text-align: center;
-  padding: 20px 0;
-  font-size: 30px;
+.players > div {
+  border: 5px solid #ac2c0b;
+  border-radius: 25%;
 }
-.grid-container > .player1,
-.grid-container > .player2,
-.grid-container > .player3,
-.grid-container > .player4 {
-  background-color: white;
+
+.playerTitle {
+  font-size: 30px;
 }
