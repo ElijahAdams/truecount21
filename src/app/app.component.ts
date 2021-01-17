@@ -86,10 +86,6 @@ export class AppComponent implements OnInit {
     // card a random number between the indicies of available card. 0 through 311 -1 for each card removed.
     return Math.floor(Math.random() * Math.floor(max));
   }
-  addCards(a, b) {
-    return {value: a.value + b.value};
-  }
-
   hit() {
     // take a hit card
   }

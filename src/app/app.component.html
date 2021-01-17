@@ -6,25 +6,16 @@
     </div>
   </div>
   <div class="dealer">
-    dealer
-    <div *ngFor="let card of dealer.hand">
-      card {{card.card}}{{card.suite}}
-    </div>
-    <div *ngIf="dealer.hand.length > 0">
-      total {{dealer.hand.reduce(addCards, {value: 0}).value}}
-    </div>
+    <p>Dealer</p>
+    <app-playing-hand [hand]="dealer.hand"></app-playing-hand>
     <div *ngIf="0 === currentPlayerTurn">
     <button (click)="determineAbility()">progress</button>
   </div>
 
   </div>
   <div *ngFor="let player of players"  class="player{{player.num}}">
-    player-{{player.num}}
-    <span *ngFor="let card of player.hand">
-      card {{card.card}}{{card.suite}}
-    </span>
-    <div *ngIf="player.hand.length > 0">total {{this.player.hand.reduce(addCards, {value: 0}).value}}</div>
-
+    <p>P-{{player.num}}</p>
+    <app-playing-hand [hand]="player.hand"></app-playing-hand>
 <!--    <div *ngIf="player.num === currentPlayerTurn">-->
 <!--      hit/stay-->
 <!--      <button (click)="determineAbility()">progress</button>-->
