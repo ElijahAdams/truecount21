@@ -7,7 +7,7 @@
 
 
 .grid-container {
-  height: 90%;
+  height: 100%;
   display: grid;
   grid-template-areas:
     'header header header header'
@@ -15,13 +15,18 @@
     'player1 blank3 blank4 player4'
     'blank5 player2 player3 blank6';
   grid-gap: 10px;
-  background-color: #2196F3;
+  background-color: #294414;
   padding: 10px;
 }
 
 .grid-container > div {
-  background-color: rgba(39, 255, 40, 0.8);
   text-align: center;
   padding: 20px 0;
   font-size: 30px;
+}
+.grid-container > .player1,
+.grid-container > .player2,
+.grid-container > .player3,
+.grid-container > .player4 {
+  background-color: white;
 }
