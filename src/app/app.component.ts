@@ -1,4 +1,4 @@
-/* tslint:disable:no-trailing-whitespace */
+/* tslint:disable:no-trailing-whitespace prefer-const */
 import {Component, OnInit} from '@angular/core';
 import {DealingService} from './dealing.service';
 
@@ -69,7 +69,6 @@ export class AppComponent implements OnInit {
       player.hand = [];
       player.win = '';
     }
-
     for (const player of this.players) {
       await this.delayedCardDeal(player);
     }
@@ -103,7 +102,8 @@ export class AppComponent implements OnInit {
 
   hit(event) {
     this.players[event].hand.push(this.deal());
-    const playerTotal = this.players[event].hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    const playerTotal = this.checkAndModifyAces(event);
+    // const playerTotal = this.players[event].hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if (playerTotal > 21) {
       this.nextPlayerTurn(event);
     }
@@ -129,6 +129,9 @@ export class AppComponent implements OnInit {
       const nextPlayerTotal = this.players[nextPlayer].hand.reduce(this.dealingService.addCards, {value: 0}).value;
       if (nextPlayerTotal < 21 ) {
         this.players[nextPlayer].isTurn = true;
+      } else if (this.twoAceHand(nextPlayer)) {
+        this.checkAndModifyAces(nextPlayer);
+        this.players[nextPlayer].isTurn = true;
       } else {
         if (nextPlayer < 2) {
           this.nextPlayerTurn(nextPlayer);
@@ -140,10 +143,21 @@ export class AppComponent implements OnInit {
       this.dealerAction();
     }
   }
+  twoAceHand(nextPlayer) {
+    let isTwoAces = false;
+    if (this.players[nextPlayer].hand.length === 2
+      && this.players[nextPlayer].hand[0].card === 'A'
+      && this.players[nextPlayer].hand[1].card === 'A') {
+      isTwoAces = true;
+    }
+    return isTwoAces;
+  }
 
   async dealerAction() {
-    await this.delay();
-    this.dealer.isDealer = false;
+    if (this.dealer.isDealer) {
+      await this.delay();
+      this.dealer.isDealer = false;
+    }
     if (this.dealerTotal < 17) {
       await this.delayedCardDeal(this.dealer);
       this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
@@ -152,6 +166,7 @@ export class AppComponent implements OnInit {
       this.determineWinners();
     }
   }
+
   determineWinners() {
     if (this.dealerTotal > 21) {
       for (const player of this.players) {
@@ -175,5 +190,21 @@ export class AppComponent implements OnInit {
       }
     }
     this.hasStarted = false;
+  }
+
+
+  checkAndModifyAces(playerNum) {
+    let currentValue = this.players[playerNum].hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    if (currentValue > 21) {
+      // find the first Ace and set the value to 11
+      for (const card of this.players[playerNum].hand) {
+        if (card.value === 11) {
+          card.value = 1;
+          return;
+        }
+      }
+    }
+    currentValue = this.players[playerNum].hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    return currentValue;
   }
 }

@@ -30,6 +30,10 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     this.handTotal = this.player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if ( this.handTotal === 21 && this.player.hand.length === 2) {
       totalDisplay = 'blackJack';
+    } else if (this.player.hand.length === 2
+      && this.player.hand[0].card === 'A'
+      && this.player.hand[1].card === 'A') {
+      totalDisplay = '12';
     } else {
       totalDisplay = this.handTotal;
     }
@@ -44,11 +48,8 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   stay(playerNum) {
     this.nextPlayerTurn.emit(playerNum);
   }
-  isAce1() {
-    const isAce1 = this.player.hand.find(card => {
-      return card.value === 1;
-    });
-    return isAce1;
+  checkSoft() {
+
   }
 
 }
