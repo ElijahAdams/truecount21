@@ -18,9 +18,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   constructor(private dealingService: DealingService,
               private cdr: ChangeDetectorRef) { }
   ngOnInit() {
-
   }
-
   ngAfterViewChecked() {
     this.cdr.detectChanges();
   }
@@ -55,5 +53,4 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   splitHand(playerNum) {
     this.split.emit(playerNum);
   }
-
 }

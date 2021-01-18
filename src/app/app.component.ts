@@ -138,6 +138,9 @@ export class AppComponent implements OnInit {
     await this.delayedCardDeal(this.players[playerNum]);
     await this.delayedCardDeal(this.players[nextPlayerNum]);
     this.players[playerNum].isTurn = true;
+    if (this.players[playerNum].hand.reduce(this.dealingService.addCards, {value: 0}).value === 21) {
+      this.nextPlayerTurn(playerNum);
+    }
   }
 
   deal() {
@@ -208,7 +211,13 @@ export class AppComponent implements OnInit {
     } else {
       for (const player of this.players) {
         const playerTotal = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
-        if (playerTotal > this.dealerTotal && playerTotal <= 21) {
+        if (playerTotal === 21 && player.hand.length === 2) {
+          if (this.dealerTotal === 21 && this.dealer.hand.length === 2 ) {
+            player.win = 'Push';
+          } else {
+            player.win = 'Win';
+          }
+        } else if (playerTotal > this.dealerTotal && playerTotal <= 21) {
           player.win = 'Win';
         } else if (playerTotal === this.dealerTotal) {
           player.win = 'Push';
