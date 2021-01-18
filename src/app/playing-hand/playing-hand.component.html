@@ -7,6 +7,7 @@
     <span *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</span>
   </div>
 </div>
+<span>count for {{player.count}}</span>
 <div class="cardContainer">
   <span *ngIf="!player.isDealer" >
     <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">

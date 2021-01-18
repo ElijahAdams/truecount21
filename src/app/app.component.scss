@@ -35,8 +35,12 @@
   background-image: linear-gradient(#ac2c0b, #c50aed);
   margin: auto;
 }
-
-
+.dealer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 10px;
+  min-height: 100px;
+}
 
 .players {
   display: grid;
