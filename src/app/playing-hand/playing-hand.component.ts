@@ -12,6 +12,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   @Input() player;
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
+  @Output() doubleDown = new EventEmitter();
   @Output() split = new EventEmitter();
   isBust = false;
   handTotal;
@@ -44,8 +45,21 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   canSplit() {
     return this.player.hand.length === 2 && this.player.hand[0].card === this.player.hand[1].card;
   }
+  canDouble() {
+    let isGoodDouble = false;
+    if (this.player.hand.reduce(this.dealingService.addCards, {value: 0}).value === 10 && this.player.hand.length === 2) {
+      isGoodDouble = true;
+    }
+    if (this.player.hand.reduce(this.dealingService.addCards, {value: 0}).value === 11 && this.player.hand.length === 2) {
+      isGoodDouble = true;
+    }
+    return isGoodDouble;
+  }
   hitPlayer(playerNum) {
     this.hit.emit(playerNum);
+  }
+  doubleDownPlayer(playerNum) {
+    this.doubleDown.emit(playerNum);
   }
   stay(playerNum) {
     this.nextPlayerTurn.emit(playerNum);

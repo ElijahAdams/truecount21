@@ -19,6 +19,7 @@
 <div class="actionRow">
   <div *ngIf="this.player.isTurn">
     <button (click)="hitPlayer(player.num)">Hit</button>
+    <button *ngIf="canDouble()" (click)="doubleDownPlayer(player.num)">DD</button>
     <button (click)="stay(player.num)">Stay</button>
     <button *ngIf="canSplit()" (click)="splitHand(player.num)">Split</button>
   </div>

@@ -3,7 +3,7 @@
   <div class="dealInfo">
     <div class="pastShoot">
       <span>
-        Past Cards = {{pastCardsLength}};
+        Past Cards = {{pastCardsLength}}
         <p class="pastRectangle"></p>
       </span>
     </div>
@@ -27,6 +27,7 @@
       <app-playing-hand [player]="player"
                         (nextPlayerTurn)="nextPlayerTurn($event)"
                         (hit)="hit($event)"
+                        (doubleDown)="doubleDown($event)"
                         (split)="split($event)"></app-playing-hand>
     </div>
   </div>

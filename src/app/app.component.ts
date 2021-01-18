@@ -127,6 +127,11 @@ export class AppComponent implements OnInit {
       this.nextPlayerTurn(event);
     }
   }
+  doubleDown(event) {
+    this.players[event].hand.push(this.deal());
+    this.checkAndModifyAces(this.players[event]);
+    this.nextPlayerTurn(event);
+  }
   async split(playerNum) {
     const nextPlayerNum = playerNum + 1;
     this.players[playerNum].isTurn = false;
