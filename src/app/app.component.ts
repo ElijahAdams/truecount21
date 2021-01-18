@@ -95,11 +95,12 @@ export class AppComponent implements OnInit {
      await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
-    // this.dealer.hand.push({ card: 'A', suite: 'spades', value: 11});
+    // this.dealer.hand.push({ card: '9', suite: 'spades', value: 9});
     for (const player of this.players) {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
+    // this.dealer.hand.push({ card: '7', suite: 'spades', value: 7});
     this.initialHandCount();
     this.initialCount1Card(this.dealer, 1);
     this.addRunningCountAfterInitialHandDeal();
@@ -284,6 +285,7 @@ export class AppComponent implements OnInit {
       this.dealer.hand.push(card);
       this.updateCardCount(this.dealer, card);
       this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+      this.dealerTotal = this.checkAndModifyAces(this.dealer);
       this.dealerAction();
     } else if (this.dealerTotal === 17 && this.multipleAcesSoft(this.dealer)) {
       this.modifyAces(this.dealer);
@@ -344,6 +346,7 @@ export class AppComponent implements OnInit {
   checkAndModifyAces(player) {
     let currentValue = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if (currentValue > 21) {
+      this.modifyAces(player);
       this.modifyAces(player);
     }
     currentValue = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;

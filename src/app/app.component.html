@@ -31,7 +31,7 @@
 
   <div class="players">
     <div *ngFor="let player of players">
-      <h2 class="playerTitle">P-{{player.num}}</h2>
+      <h2 class="playerTitle">Player {{player.num + 1}}</h2>
       <app-playing-hand [player]="player"
                         (nextPlayerTurn)="nextPlayerTurn($event)"
                         (hit)="hit($event)"
