@@ -42,7 +42,17 @@ export class AppComponent implements OnInit {
     this.populateDeck();
     this.setShoots();
   }
+  gameRestart() {
+    this.populateDeck();
+    this.setShoots();
+    this.tableReset();
+    this.pastCardsLength = 0;
+    this.runningCount = 0;
+    this.trueCount = 0;
+    this.decksRemaining = 6;
+  }
   populateDeck() {
+    this.sixDeckCardArray = [];
     let newCard;
     this.singleDeckCardArray.forEach(card => {
       for (let i = 0; i < 6; i++) {
@@ -71,6 +81,9 @@ export class AppComponent implements OnInit {
   }
 
   startRound() {
+    if (this.sixDeckCardArray.length < 78 ) {
+      this.gameRestart();
+    }
     this.tableReset();
     this.initialDeal();
     this.hasStarted = true;
@@ -332,10 +345,10 @@ export class AppComponent implements OnInit {
     }
     this.decksRemaining = Math.round((this.sixDeckCardArray.length / this.cardsInDeck) * 10) / 10;
     // if running count greater than 0 find out truecount otherwise true count is zero.
-    this.trueCount = this.runningCount > 0 ? this.runningCount / this.decksRemaining : 0;
+    const theoreticalTrueCount =  Math.round(( this.runningCount / this.decksRemaining ) * 10) / 10;
+    this.trueCount = this.runningCount > 0 ? theoreticalTrueCount : 0;
     this.hasStarted = false;
   }
-
 
   hasAce(player) {
     const acePresent = player.hand.find( card => {
