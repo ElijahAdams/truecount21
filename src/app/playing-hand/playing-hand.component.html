@@ -1,7 +1,11 @@
 <div class="playerTotal" *ngIf="player.hand.length > 0">
   <p class="winBanner">{{player.win}}</p>
-  <span *ngIf="!player.isDealer">Total {{determineTotal()}}</span>
-  <span *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</span>
+  <p *ngIf="!player.isDealer">
+    Total
+    <span *ngIf="isSoft">soft</span>
+    {{determineTotal()}}
+  </p>
+  <p *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</p>
 </div>
 <span *ngIf="!player.isDealer" >
   <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
