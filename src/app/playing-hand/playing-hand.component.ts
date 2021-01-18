@@ -53,10 +53,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     this.nextPlayerTurn.emit(playerNum);
   }
   splitHand(playerNum) {
-    this.split.emit(playerNum)
-  }
-  checkSoft() {
-
+    this.split.emit(playerNum);
   }
 
 }
