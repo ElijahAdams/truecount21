@@ -13,26 +13,30 @@
   align-items: end;
 }
 .dealInfo > .pastShoot {
-  border-left: black solid 2px;
-  border-bottom: black solid 2px;
+  border-left: #ac2c0b solid 2px;
+  border-bottom: #ac2c0b solid 2px;
+}
+
+.dealInfo > .futureShoot {
+  border-right: #ac2c0b solid 2px;
+  border-bottom: #ac2c0b solid 2px;
 }
 .pastRectangle {
   height: var(--pastHeight);
-  width: 50px;
-  background-color: white;
+  width: 100px;
+  background-color: #ac2c0b;
+  background-image: linear-gradient(#ac2c0b, #c50aed);
   margin: auto;
 }
 .futureRectangle {
   height: var(--futureHeight);
-  width: 50px;
-  background-color: white;
+  width: 100px;
+  background-color: #ac2c0b;
+  background-image: linear-gradient(#ac2c0b, #c50aed);
   margin: auto;
 }
 
-.dealInfo > .futureShoot {
-  border-right: black solid 2px;
-  border-bottom: black solid 2px;
-}
+
 
 .players {
   display: grid;

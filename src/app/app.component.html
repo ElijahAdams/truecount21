@@ -3,7 +3,7 @@
   <div class="dealInfo">
     <div class="pastShoot">
       <span>
-        cards Past = {{pastCardsLength}};
+        Past Cards = {{pastCardsLength}};
         <p class="pastRectangle"></p>
       </span>
     </div>
@@ -11,7 +11,7 @@
       <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
     </div>
     <div class="futureShoot">
-      <span>cards in Shoot = {{sixDeckCardArray.length}}</span>
+      <span>Future Cards = {{sixDeckCardArray.length}}</span>
       <p class="futureRectangle"></p>
     </div>
   </div>
