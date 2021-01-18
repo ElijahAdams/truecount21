@@ -209,7 +209,9 @@ export class AppComponent implements OnInit {
       await this.delay();
       this.dealer.isDealer = false;
     }
-    if (this.dealerTotal < 17) {
+    if (this.allPlayersBust()) {
+      this.determineWinners();
+    } else if (this.dealerTotal < 17) {
       await this.delayedCardDeal(this.dealer);
       this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
       this.dealerAction();
@@ -282,4 +284,15 @@ export class AppComponent implements OnInit {
       }
     }
   }
+
+  allPlayersBust() {
+    let allBusted = true;
+    for (const player of this.players) {
+     if (player.hand.reduce(this.dealingService.addCards, {value: 0}).value <= 21 ) {
+       allBusted = false;
+     }
+    }
+    return allBusted;
+  }
+
 }
