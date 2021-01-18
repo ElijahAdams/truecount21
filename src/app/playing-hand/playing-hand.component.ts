@@ -12,9 +12,9 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   @Input() player;
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
+  @Output() split = new EventEmitter();
   isBust = false;
   handTotal;
-  isSoft = false;
   constructor(private dealingService: DealingService,
               private cdr: ChangeDetectorRef) { }
   ngOnInit() {
@@ -26,6 +26,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   }
 
   determineTotal() {
+    this.isBust = false;
     let totalDisplay = '';
     this.handTotal = this.player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if ( this.handTotal === 21 && this.player.hand.length === 2) {
@@ -33,9 +34,12 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     } else if (this.player.hand.length === 2
       && this.player.hand[0].card === 'A'
       && this.player.hand[1].card === 'A') {
-      totalDisplay = '12';
+      totalDisplay = 'Total 12';
+    } else if (this.handTotal > 21) {
+      totalDisplay = 'Bust ' + this.handTotal;
+      this.isBust = true;
     } else {
-      totalDisplay = this.handTotal;
+      totalDisplay = 'Total ' + this.handTotal;
     }
     return totalDisplay;
   }
@@ -47,6 +51,9 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   }
   stay(playerNum) {
     this.nextPlayerTurn.emit(playerNum);
+  }
+  splitHand(playerNum) {
+    this.split.emit(playerNum)
   }
   checkSoft() {
 

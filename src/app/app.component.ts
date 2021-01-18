@@ -15,12 +15,13 @@ export class AppComponent implements OnInit {
     3. deal 2nd card to players face up
     4. deal 2nd card to dealer face up
    */
-  dealer = {num: 3, hand: [], isTurn: false, win: '', isDealer: true};
+
   players = [
     {num: 0, hand: [], isTurn: false, win: '', isDealer: false},
     {num: 1, hand: [], isTurn: false, win: '', isDealer: false},
     {num: 2, hand: [], isTurn: false, win: '', isDealer: false}
     ];
+  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true};
   dealerTotal;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
@@ -57,10 +58,18 @@ export class AppComponent implements OnInit {
   }
 
   startRound() {
-    this.dealerTotal = '';
-    this.dealer.isDealer = true;
+    this.tableReset();
     this.initialDeal();
     this.hasStarted = true;
+  }
+  tableReset() {
+    this.players = [
+      {num: 0, hand: [], isTurn: false, win: '', isDealer: false},
+      {num: 1, hand: [], isTurn: false, win: '', isDealer: false},
+      {num: 2, hand: [], isTurn: false, win: '', isDealer: false}
+    ];
+    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true};
+    this.dealerTotal = '';
   }
 
   async initialDeal() {
@@ -70,7 +79,7 @@ export class AppComponent implements OnInit {
       player.win = '';
     }
     for (const player of this.players) {
-      await this.delayedCardDeal(player);
+     await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
     for (const player of this.players) {
@@ -103,13 +112,32 @@ export class AppComponent implements OnInit {
   hit(event) {
     this.players[event].hand.push(this.deal());
     const playerTotal = this.checkAndModifyAces(event);
-    // const playerTotal = this.players[event].hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if (playerTotal > 21) {
       this.nextPlayerTurn(event);
     }
     if (playerTotal === 21) {
       this.nextPlayerTurn(event);
     }
+  }
+  async split(playerNum) {
+    const nextPlayerNum = playerNum + 1;
+    this.players[playerNum].isTurn = false;
+    const splitPlayer = {
+      num: nextPlayerNum,
+      hand: [this.players[playerNum].hand[1]],
+      isTurn: false,
+      win: '',
+      isDealer: false
+    };
+    this.players.splice(nextPlayerNum, 0, splitPlayer);
+    this.players[playerNum].hand.pop();
+    for (let i = playerNum + 2; i < this.players.length; i ++) {
+      this.players[i].num = this.players[i].num + 1;
+    }
+    this.dealer.num = this.players.length;
+    await this.delayedCardDeal(this.players[playerNum]);
+    await this.delayedCardDeal(this.players[nextPlayerNum]);
+    this.players[playerNum].isTurn = true;
   }
 
   deal() {
@@ -125,7 +153,7 @@ export class AppComponent implements OnInit {
     if (playerNum > -1) {
       this.players[playerNum].isTurn = false;
     }
-    if (nextPlayer < 3) {
+    if (nextPlayer < this.players.length) {
       const nextPlayerTotal = this.players[nextPlayer].hand.reduce(this.dealingService.addCards, {value: 0}).value;
       if (nextPlayerTotal < 21 ) {
         this.players[nextPlayer].isTurn = true;
@@ -133,7 +161,7 @@ export class AppComponent implements OnInit {
         this.checkAndModifyAces(nextPlayer);
         this.players[nextPlayer].isTurn = true;
       } else {
-        if (nextPlayer < 2) {
+        if (nextPlayer < this.players.length - 1) {
           this.nextPlayerTurn(nextPlayer);
         } else {
           this.dealerAction();
@@ -191,7 +219,6 @@ export class AppComponent implements OnInit {
     }
     this.hasStarted = false;
   }
-
 
   checkAndModifyAces(playerNum) {
     let currentValue = this.players[playerNum].hand.reduce(this.dealingService.addCards, {value: 0}).value;

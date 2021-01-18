@@ -1,6 +1,18 @@
 img {
   height: 125px;
 }
+button {
+  color: white;
+  background-color: transparent;
+  border: solid white 3px;
+  border-radius: 5px;
+  width: 50px;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #65a32d;
+}
 
 .bustHand {
   color: #ac2c0b;

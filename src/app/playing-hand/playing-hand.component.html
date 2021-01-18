@@ -1,8 +1,6 @@
 <div class="playerTotal" *ngIf="player.hand.length > 0">
   <p class="winBanner">{{player.win}}</p>
-  <p *ngIf="!player.isDealer">
-    Total
-    <span *ngIf="isSoft">soft</span>
+  <p *ngIf="!player.isDealer" [ngClass]="{'bustHand': isBust }">
     {{determineTotal()}}
   </p>
   <p *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</p>
@@ -17,6 +15,6 @@
 <div *ngIf="this.player.isTurn">
   <button (click)="hitPlayer(player.num)">Hit</button>
   <button (click)="stay(player.num)">Stay</button>
-  <button *ngIf="canSplit()">Split</button>
+  <button *ngIf="canSplit()" (click)="splitHand(player.num)">Split</button>
 </div>
 
