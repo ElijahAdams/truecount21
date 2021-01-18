@@ -1,4 +1,5 @@
 <div class="playerTotal" *ngIf="player.hand.length > 0">
+  <p>{{player.win}}</p>
   <span *ngIf="!isBust">Total {{determineTotal()}}</span>
 </div>
 <span *ngFor="let card of player.hand">

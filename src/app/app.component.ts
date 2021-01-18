@@ -15,13 +15,13 @@ export class AppComponent implements OnInit {
     3. deal 2nd card to players face up
     4. deal 2nd card to dealer face up
    */
-  dealer = {num: 3, hand: [], isTurn: false};
+  dealer = {num: 3, hand: [], isTurn: false, win: ''};
   players = [
-    {num: 0, hand: [], isTurn: false},
-    {num: 1, hand: [], isTurn: false},
-    {num: 2, hand: [], isTurn: false}
+    {num: 0, hand: [], isTurn: false, win: ''},
+    {num: 1, hand: [], isTurn: false, win: ''},
+    {num: 2, hand: [], isTurn: false, win: ''}
     ];
-  currentPlayerTurn = 1;
+  dealerTotal;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
   sixDeckCardArray = [];
@@ -65,6 +65,7 @@ export class AppComponent implements OnInit {
     this.dealer.hand = [];
     for (const player of this.players) {
       player.hand = [];
+      player.win = '';
     }
 
     for (const player of this.players) {
@@ -134,14 +135,38 @@ export class AppComponent implements OnInit {
   }
 
   async dealerAction() {
-    const dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
-    if (dealerTotal < 17) {
+    this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    if (this.dealerTotal < 17) {
       await this.delayedCardDeal(this.dealer);
       this.dealerAction();
     } else {
       // end round
-      console.log('roundover');
+
+      this.determineWinners();
       this.hasStarted = false;
+    }
+  }
+  determineWinners() {
+    if (this.dealerTotal > 21) {
+      for (const player of this.players) {
+        const playerTotal = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+        if (playerTotal <= 21 ) {
+          player.win = 'Win';
+        } else {
+          player.win = 'Lose';
+        }
+      }
+    } else {
+      for (const player of this.players) {
+        const playerTotal = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+        if (playerTotal > this.dealerTotal && playerTotal <= 21) {
+          player.win = 'Win';
+        } else if (playerTotal === this.dealerTotal) {
+          player.win = 'Push';
+        } else {
+          player.win = 'Lose';
+        }
+      }
     }
   }
 }
