@@ -1,9 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="grid-container">
-  <div>
-    <div *ngIf="!hasStarted">
-      <button class="dealButton" (click)="startRound()">Deal</button>
-    </div>
+  <div class="dealInfo">
+    <span>cards Past = {{312 - sixDeckCardArray.length}}</span>
+    <span>
+      <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
+    </span>
+    <span>cards in Shoot = {{sixDeckCardArray.length}}</span>
   </div>
 
   <div class="dealer">
