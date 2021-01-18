@@ -1,5 +1,5 @@
 /* tslint:disable:no-trailing-whitespace prefer-const */
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {DealingService} from './dealing.service';
 
 @Component({
@@ -26,13 +26,14 @@ export class AppComponent implements OnInit {
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
   sixDeckCardArray = [];
+  pastCardsLength = 0;
   hasStarted = false;
   actionReady = false;
-  constructor(private dealingService: DealingService) {
-
+  constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
   ngOnInit() {
     this.populateDeck();
+    this.setShoots();
   }
   populateDeck() {
     let newCard;
@@ -49,6 +50,11 @@ export class AppComponent implements OnInit {
         });
       }
     });
+  }
+  setShoots() {
+    this.pastCardsLength = 312 - this.sixDeckCardArray.length;
+    (this.totalBody.nativeElement as HTMLElement).style.setProperty('--futureHeight', (this.sixDeckCardArray.length / 6) + 'px');
+    (this.totalBody.nativeElement as HTMLElement).style.setProperty('--pastHeight', (this.pastCardsLength / 6) + 'px');
   }
   getCardValue(card) {
     if (card !== 'A') {
@@ -148,6 +154,7 @@ export class AppComponent implements OnInit {
     const dealtCardIndex = this.randomCard(this.sixDeckCardArray.length);
     const cardDelt = this.sixDeckCardArray[dealtCardIndex];
     this.sixDeckCardArray.splice(dealtCardIndex, 1);
+    this.setShoots();
     return cardDelt;
   }
 

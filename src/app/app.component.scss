@@ -9,8 +9,31 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 10px;
-  height: 350px;
+  color: white;
+  align-items: end;
 }
+.dealInfo > .pastShoot {
+  border-left: black solid 2px;
+  border-bottom: black solid 2px;
+}
+.pastRectangle {
+  height: var(--pastHeight);
+  width: 50px;
+  background-color: white;
+  margin: auto;
+}
+.futureRectangle {
+  height: var(--futureHeight);
+  width: 50px;
+  background-color: white;
+  margin: auto;
+}
+
+.dealInfo > .futureShoot {
+  border-right: black solid 2px;
+  border-bottom: black solid 2px;
+}
+
 .players {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

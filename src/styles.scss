@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap');
+:root {
+  --futureHeight: 0;
+  --pastHeight: 0;
+}
 html{
   height: 100%;
   background-color: #294414;

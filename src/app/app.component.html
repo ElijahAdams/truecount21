@@ -1,11 +1,19 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="grid-container">
   <div class="dealInfo">
-    <span>cards Past = {{312 - sixDeckCardArray.length}}</span>
-    <span>
+    <div class="pastShoot">
+      <span>
+        cards Past = {{pastCardsLength}};
+        <p class="pastRectangle"></p>
+      </span>
+    </div>
+    <div>
       <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
-    </span>
-    <span>cards in Shoot = {{sixDeckCardArray.length}}</span>
+    </div>
+    <div class="futureShoot">
+      <span>cards in Shoot = {{sixDeckCardArray.length}}</span>
+      <p class="futureRectangle"></p>
+    </div>
   </div>
 
   <div class="dealer">
