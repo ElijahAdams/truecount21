@@ -15,10 +15,7 @@ export class AppComponent implements OnInit {
     3. deal 2nd card to players face up
     4. deal 2nd card to dealer face up
    */
-  dealer = {
-    hand: [],
-    isDealer : true
-  };
+  dealer = {num: 0, hand: []};
   players = [
     {num: 1, hand: []},
     {num: 2, hand: []},
@@ -70,30 +67,16 @@ export class AppComponent implements OnInit {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
-    // deal second card to all
     for (const player of this.players) {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
     this.actionReady = true;
-    this.dealingService.finishedInitialDeal.next( this.actionReady);
-    this.dealingService.currentPlayerTurn.next( this.currentPlayerTurn );
   }
 
   async delayedCardDeal(player) {
     await this.delay();
     player.hand.push(this.deal());
-  }
-
-  async delayedCardDealFake(player) {
-    await this.delay();
-    player.hand.push(
-      {
-      card: 'A',
-      suite: 'spades',
-      value: 11
-      }
-    );
   }
 
   delay() {
@@ -106,7 +89,11 @@ export class AppComponent implements OnInit {
   }
 
   hit(event) {
-    this.players[event - 1].hand.push(this.deal());
+    if (event === 0) {
+      this.dealer.hand.push(this.deal());
+    } else {
+      this.players[event - 1].hand.push(this.deal());
+    }
   }
 
   deal() {

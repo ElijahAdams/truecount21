@@ -10,20 +10,12 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   @Input() player;
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
-  isCurrentPlayer;
+  isBust = false;
   actionReady;
-  playerOptions = {anyOptions: true , hit: false, stay: true, split: false };
+  playerOptions = {anyOptions: false , hit: false, stay: true, split: false };
   constructor(private dealingService: DealingService,
               private cdr: ChangeDetectorRef) { }
   ngOnInit() {
-    this.dealingService.currentPlayerTurn.subscribe(playerNum => {
-      this.isCurrentPlayer = playerNum === this.player.num ? true : false;
-      // check 21
-    });
-    this.dealingService.finishedInitialDeal.subscribe(value => {
-      this.actionReady = value;
-      this.updateOptions();
-    });
   }
 
   ngAfterViewChecked() {
@@ -49,41 +41,19 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     const hasAce = hand.filter(card => {
       return card.card === 'A';
     });
-    // blackjackes don't see this logic.
-    // A + 1-9 = soft
-    // A + A = soft
-    // A + multipleCards with total under 10 = soft
-    // A + muttipleCards equaling 10 = 21
     if (hasAce.length > 0) {
-      // A + 8 = soft 19 or A + 8 = 12
       if (hasAce.length === 1 && hand.reduce(this.addCards, {value: 0}).value < 21 ) {
         handInfo = 'Soft';
       }
     }
     return handInfo;
   }
-
-  updateOptions() {
-    if (this.player.hand.reduce(this.addCards, {value: 0}).value >= 21) {
-     this.playerOptions.anyOptions = false;
-    }
-    if (this.player.hand.reduce(this.addCards, {value: 0}).value < 21) {
-      this.playerOptions.hit = true;
-    }
-    if (this.player.hand.length === 2 ) {
-      if (this.player.hand[0].card === this.player.hand[1].card) {
-        this.playerOptions.split = true;
-      }
-    }
-  }
   hitPlayer() {
     this.hit.emit(this.player.num);
-    this.updateOptions();
-    if(!this.playerOptions.anyOptions) {
-      this.nextPlayerTurn.emit();
-    }
   }
   stay() {
+    this.playerOptions.anyOptions = false;
     this.nextPlayerTurn.emit();
   }
+
 }

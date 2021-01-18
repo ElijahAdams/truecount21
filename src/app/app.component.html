@@ -6,13 +6,12 @@
       <button (click)="startRound()">start</button>
     </div>
   </div>
+
   <div class="dealer">
     <h2>Dealer</h2>
     <app-playing-hand [player]="dealer" ></app-playing-hand>
-    <div *ngIf="0 === currentPlayerTurn">
   </div>
 
-  </div>
   <div class="players">
     <div *ngFor="let player of players">
       <h2 class="playerTitle">P-{{player.num}}</h2>
