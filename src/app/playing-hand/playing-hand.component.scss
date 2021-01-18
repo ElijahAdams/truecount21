@@ -1,8 +1,32 @@
+.playerContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.runningCountContainer{
+  display: flex;
+  justify-content: flex-start;
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.scoreContainer {
+  display: flex;
+  justify-content: center;
+  font-size: 26px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.col {
+  flex: 1;
+  height: 26px;
+}
+
 .cardContainer {
   height: 140px;
 }
 img {
-  height: 125px;
+  height: 100px;
 }
 
 button {
@@ -17,19 +41,11 @@ button {
 button:hover {
   background-color: #65a32d;
 }
-.scoreContainer {
-  height: 26px;
-}
+
 .bustHand {
   color: #ac2c0b;
 }
-.playerTotal {
-  font-size: 24px;
-}
-.winBanner{
-  font-size: 30px;
-  height: 35px;
-}
-.actionRow{
+
+.actionRow {
   height: 40px;
 }

@@ -29,16 +29,16 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     let totalDisplay = '';
     this.handTotal = this.player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if ( this.handTotal === 21 && this.player.hand.length === 2) {
-      totalDisplay = 'blackJack';
+      totalDisplay = 'BlackJack';
     } else if (this.player.hand.length === 2
       && this.player.hand[0].card === 'A'
       && this.player.hand[1].card === 'A') {
-      totalDisplay = 'Total 12';
+      totalDisplay = 'Total = 12';
     } else if (this.handTotal > 21) {
       totalDisplay = 'Bust ' + this.handTotal;
       this.isBust = true;
     } else {
-      totalDisplay = 'Total ' + this.handTotal;
+      totalDisplay = 'Total = ' + this.handTotal;
     }
     return totalDisplay;
   }

@@ -1,28 +1,34 @@
-<div class="playerTotal">
-  <p class="winBanner">{{player.win}}</p>
-  <div class="scoreContainer">
-    <span *ngIf="!player.isDealer && player.hand.length > 0" [ngClass]="{'bustHand': isBust }">
-      {{determineTotal()}}
-    </span>
-    <span *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</span>
+<div class="playerContainer">
+
+  <div class="runningCountContainer">
+    <p class="col">Hand Count =
+      <span [ngClass]="{'posCount': player.count > 0, 'negCount':player.count < 0 }">{{player.count}}</span>
+    </p>
+    <p class="col">{{player.win}}</p>
+    <p class="col"></p>
   </div>
-</div>
-<span>count for {{player.count}}</span>
-<div class="cardContainer">
-  <span *ngIf="!player.isDealer" >
-    <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
-  </span>
-  <span *ngIf="player.isDealer">
-    <img *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
-    <img *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
-  </span>
-</div>
-<div class="actionRow">
-  <div *ngIf="this.player.isTurn">
-    <button (click)="hitPlayer(player.num)">Hit</button>
-    <button *ngIf="canDouble()" (click)="doubleDownPlayer(player.num)">DD</button>
-    <button (click)="stay(player.num)">Stay</button>
-    <button *ngIf="canSplit()" (click)="splitHand(player.num)">Split</button>
+
+  <div class="scoreContainer">
+    <span *ngIf="!player.isDealer && player.hand.length > 0" [ngClass]="{'bustHand': isBust }">{{determineTotal()}}</span>
+    <span *ngIf="player.isDealer && player.hand.length > 1">Showing {{player.hand[1].value}}</span>
+  </div>
+
+  <div class="cardContainer">
+    <span *ngIf="!player.isDealer" >
+      <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
+    </span>
+    <span *ngIf="player.isDealer">
+      <img *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
+      <img *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
+    </span>
+  </div>
+  <div class="actionRow">
+    <div *ngIf="this.player.isTurn">
+      <button (click)="hitPlayer(player.num)">Hit</button>
+      <button *ngIf="canDouble()" (click)="doubleDownPlayer(player.num)">DD</button>
+      <button (click)="stay(player.num)">Stay</button>
+      <button *ngIf="canSplit()" (click)="splitHand(player.num)">Split</button>
+    </div>
   </div>
 </div>
 
