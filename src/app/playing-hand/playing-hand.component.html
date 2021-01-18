@@ -1,20 +1,26 @@
-<div class="playerTotal" *ngIf="player.hand.length > 0">
+<div class="playerTotal">
   <p class="winBanner">{{player.win}}</p>
-  <p *ngIf="!player.isDealer" [ngClass]="{'bustHand': isBust }">
-    {{determineTotal()}}
-  </p>
-  <p *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</p>
+  <div class="scoreContainer">
+    <span *ngIf="!player.isDealer && player.hand.length > 0" [ngClass]="{'bustHand': isBust }">
+      {{determineTotal()}}
+    </span>
+    <span *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</span>
+  </div>
 </div>
-<span *ngIf="!player.isDealer" >
-  <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
-</span>
-<span *ngIf="player.isDealer">
-  <img *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
-  <img *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
-</span>
-<div *ngIf="this.player.isTurn">
-  <button (click)="hitPlayer(player.num)">Hit</button>
-  <button (click)="stay(player.num)">Stay</button>
-  <button *ngIf="canSplit()" (click)="splitHand(player.num)">Split</button>
+<div class="cardContainer">
+  <span *ngIf="!player.isDealer" >
+    <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
+  </span>
+  <span *ngIf="player.isDealer">
+    <img *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
+    <img *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
+  </span>
+</div>
+<div class="actionRow">
+  <div *ngIf="this.player.isTurn">
+    <button (click)="hitPlayer(player.num)">Hit</button>
+    <button (click)="stay(player.num)">Stay</button>
+    <button *ngIf="canSplit()" (click)="splitHand(player.num)">Split</button>
+  </div>
 </div>
 

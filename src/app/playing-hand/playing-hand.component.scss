@@ -1,6 +1,10 @@
+.cardContainer {
+  height: 140px;
+}
 img {
   height: 125px;
 }
+
 button {
   color: white;
   background-color: transparent;
@@ -13,7 +17,9 @@ button {
 button:hover {
   background-color: #65a32d;
 }
-
+.scoreContainer {
+  height: 26px;
+}
 .bustHand {
   color: #ac2c0b;
 }
@@ -22,4 +28,8 @@ button:hover {
 }
 .winBanner{
   font-size: 30px;
+  height: 35px;
+}
+.actionRow{
+  height: 40px;
 }
