@@ -13,14 +13,18 @@
     <span *ngIf="player.isDealer && player.hand.length > 1">Showing {{player.hand[1].value}}</span>
   </div>
 
-  <div class="cardContainer">
-    <span *ngIf="!player.isDealer" >
-      <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
-    </span>
-    <span *ngIf="player.isDealer">
-      <img *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
-      <img *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
-    </span>
+  <div class="cardContainer" [ngClass]="{'flexCardContainer': over5Cards }">
+    <div class="cards" *ngIf="!player.isDealer" >
+      <img [ngClass]="{'over5Cards': over5Cards }"
+           class="cardimg" *ngFor="let card of player.hand; let i = index"
+           src="../../assets/cards/{{card.card}}{{card.suite}}.svg"
+           [ngStyle]="{'right': 60*i + 'px'}"
+      >
+    </div>
+    <div *ngIf="player.isDealer">
+      <img class="cardimg"  *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
+      <img class="cardimg"  *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
+    </div>
   </div>
   <div class="actionRow">
     <div *ngIf="this.player.isTurn">

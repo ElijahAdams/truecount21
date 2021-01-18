@@ -16,6 +16,7 @@
   font-size: 26px;
   margin-top: 5px;
   margin-bottom: 5px;
+  height: 28px;
 }
 .col {
   flex: 1;
@@ -23,12 +24,25 @@
 }
 
 .cardContainer {
-  height: 140px;
+  height: 125px;
+  width: 100%;
 }
-img {
-  height: 100px;
+.flexCardContainer {
+  display: flex;
 }
-
+.cards {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+.cardimg {
+  max-height: 100%;
+  max-width: 80px;
+}
+.over5Cards {
+ border: #ac2c0b solid 1.5px;
+  position: relative;
+}
 button {
   color: white;
   background-color: transparent;

@@ -105,7 +105,7 @@ export class AppComponent implements OnInit {
       player.win = '';
     }
     for (const player of this.players) {
-     await this.delayedCardDeal(player);
+      await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
     // this.dealer.hand.push({ card: '9', suite: 'spades', value: 9});

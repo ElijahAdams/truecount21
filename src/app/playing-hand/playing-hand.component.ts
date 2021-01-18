@@ -16,6 +16,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   @Output() split = new EventEmitter();
   isBust = false;
   handTotal;
+  over5Cards = false;
   constructor(private dealingService: DealingService,
               private cdr: ChangeDetectorRef) { }
   ngOnInit() {
@@ -40,6 +41,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     } else {
       totalDisplay = 'Total = ' + this.handTotal;
     }
+    this.over5Cards = this.player.hand.length > 5 ? true : false;
     return totalDisplay;
   }
   canSplit() {
