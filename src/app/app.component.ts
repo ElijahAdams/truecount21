@@ -15,11 +15,11 @@ export class AppComponent implements OnInit {
     3. deal 2nd card to players face up
     4. deal 2nd card to dealer face up
    */
-  dealer = {num: 3, hand: [], isTurn: false, win: ''};
+  dealer = {num: 3, hand: [], isTurn: false, win: '', isDealer: true};
   players = [
-    {num: 0, hand: [], isTurn: false, win: ''},
-    {num: 1, hand: [], isTurn: false, win: ''},
-    {num: 2, hand: [], isTurn: false, win: ''}
+    {num: 0, hand: [], isTurn: false, win: '', isDealer: false},
+    {num: 1, hand: [], isTurn: false, win: '', isDealer: false},
+    {num: 2, hand: [], isTurn: false, win: '', isDealer: false}
     ];
   dealerTotal;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -57,6 +57,8 @@ export class AppComponent implements OnInit {
   }
 
   startRound() {
+    this.dealerTotal = '';
+    this.dealer.isDealer = true;
     this.initialDeal();
     this.hasStarted = true;
   }
@@ -76,8 +78,13 @@ export class AppComponent implements OnInit {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
-    // check if dealer has blackjack?
-    this.nextPlayerTurn(-1);
+    this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    // if dealer has blackjack check pushes and go to next round;
+    if (this.dealerTotal === 21 ) {
+      this.dealerAction();
+    } else {
+      this.nextPlayerTurn(-1);
+    }
   }
 
   async delayedCardDeal(player) {
@@ -135,15 +142,14 @@ export class AppComponent implements OnInit {
   }
 
   async dealerAction() {
-    this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    await this.delay();
+    this.dealer.isDealer = false;
     if (this.dealerTotal < 17) {
       await this.delayedCardDeal(this.dealer);
+      this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
       this.dealerAction();
     } else {
-      // end round
-
       this.determineWinners();
-      this.hasStarted = false;
     }
   }
   determineWinners() {
@@ -168,5 +174,6 @@ export class AppComponent implements OnInit {
         }
       }
     }
+    this.hasStarted = false;
   }
 }

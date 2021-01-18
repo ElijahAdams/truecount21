@@ -1,9 +1,14 @@
 <div class="playerTotal" *ngIf="player.hand.length > 0">
-  <p>{{player.win}}</p>
-  <span *ngIf="!isBust">Total {{determineTotal()}}</span>
+  <p class="winBanner">{{player.win}}</p>
+  <span *ngIf="!player.isDealer">Total {{determineTotal()}}</span>
+  <span *ngIf="player.isDealer && player.hand.length > 1">showing {{player.hand[1].value}}</span>
 </div>
-<span *ngFor="let card of player.hand">
-  <img src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
+<span *ngIf="!player.isDealer" >
+  <img *ngFor="let card of player.hand" src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
+</span>
+<span *ngIf="player.isDealer">
+  <img *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
+  <img *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
 </span>
 <div *ngIf="this.player.isTurn">
   <button (click)="hitPlayer(player.num)">Hit</button>
