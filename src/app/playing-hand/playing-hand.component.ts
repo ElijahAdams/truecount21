@@ -1,3 +1,4 @@
+/* tslint:disable:no-trailing-whitespace prefer-const */
 import {Component, Input, OnInit, AfterViewChecked, Output, ChangeDetectorRef, EventEmitter} from '@angular/core';
 import {DealingService} from '../dealing.service';
 
@@ -11,8 +12,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
   isBust = false;
-  actionReady;
-  playerOptions = {anyOptions: false , hit: false, stay: true, split: false };
+  handTotal;
   constructor(private dealingService: DealingService,
               private cdr: ChangeDetectorRef) { }
   ngOnInit() {
@@ -21,19 +21,17 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {
     this.cdr.detectChanges();
   }
-  addCards(a, b) {
-    return {value: a.value + b.value};
-  }
-  determineTotal(hand) {
+  determineTotal() {
     let handInfo = '';
-    let total = '';
-    if (hand.reduce(this.addCards, {value: 0}).value === 21 && hand.length === 2) {
-      total = 'blackJack';
+    let totalDisplay = '';
+    this.handTotal = this.player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    if ( this.handTotal === 21 && this.player.hand.length === 2) {
+      totalDisplay = 'blackJack';
     } else {
-      handInfo = this.softness(hand);
-      total = handInfo + ' ' + hand.reduce(this.addCards, {value: 0}).value;
+      handInfo = this.softness(this.player.hand);
+      totalDisplay = handInfo + ' ' + this.handTotal;
     }
-    return total;
+    return totalDisplay;
   }
 
   softness(hand) {
@@ -41,19 +39,18 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     const hasAce = hand.filter(card => {
       return card.card === 'A';
     });
-    if (hasAce.length > 0) {
-      if (hasAce.length === 1 && hand.reduce(this.addCards, {value: 0}).value < 21 ) {
-        handInfo = 'Soft';
-      }
-    }
+
     return handInfo;
   }
-  hitPlayer() {
-    this.hit.emit(this.player.num);
+  canSplit() {
+    return this.player.hand.length === 2 && this.player.hand[0].card === this.player.hand[1].card;
   }
-  stay() {
-    this.playerOptions.anyOptions = false;
-    this.nextPlayerTurn.emit();
+  hitPlayer(playerNum) {
+    this.hit.emit(playerNum);
   }
+  stay(playerNum) {
+    this.nextPlayerTurn.emit(playerNum);
+  }
+
 
 }

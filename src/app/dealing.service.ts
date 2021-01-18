@@ -5,8 +5,8 @@ import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
   providedIn: 'root'
 })
 export class DealingService {
-  finishedInitialDeal = new BehaviorSubject(null);
-  currentPlayerTurn = new BehaviorSubject(null);
   constructor() { }
-
+  addCards(a, b) {
+    return {value: a.value + b.value};
+  }
 }

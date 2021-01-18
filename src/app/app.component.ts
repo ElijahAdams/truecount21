@@ -15,11 +15,11 @@ export class AppComponent implements OnInit {
     3. deal 2nd card to players face up
     4. deal 2nd card to dealer face up
    */
-  dealer = {num: 0, hand: []};
+  dealer = {num: 3, hand: [], isTurn: false};
   players = [
-    {num: 1, hand: []},
-    {num: 2, hand: []},
-    {num: 3, hand: []}
+    {num: 0, hand: [], isTurn: false},
+    {num: 1, hand: [], isTurn: false},
+    {num: 2, hand: [], isTurn: false}
     ];
   currentPlayerTurn = 1;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -62,7 +62,11 @@ export class AppComponent implements OnInit {
   }
 
   async initialDeal() {
-    // deal first card to all
+    this.dealer.hand = [];
+    for (const player of this.players) {
+      player.hand = [];
+    }
+
     for (const player of this.players) {
       await this.delayedCardDeal(player);
     }
@@ -71,7 +75,8 @@ export class AppComponent implements OnInit {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
-    this.actionReady = true;
+    // check if dealer has blackjack?
+    this.nextPlayerTurn(-1);
   }
 
   async delayedCardDeal(player) {
@@ -89,10 +94,13 @@ export class AppComponent implements OnInit {
   }
 
   hit(event) {
-    if (event === 0) {
-      this.dealer.hand.push(this.deal());
-    } else {
-      this.players[event - 1].hand.push(this.deal());
+    this.players[event].hand.push(this.deal());
+    const playerTotal = this.players[event].hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    if (playerTotal > 21) {
+      this.nextPlayerTurn(event);
+    }
+    if (playerTotal === 21) {
+      this.nextPlayerTurn(event);
     }
   }
 
@@ -104,13 +112,36 @@ export class AppComponent implements OnInit {
     return cardDelt;
   }
 
-  nextPlayerTurn() {
-    if (this.currentPlayerTurn === 3) {
-      this.currentPlayerTurn = 0;
-    } else {
-      this.currentPlayerTurn++;
+  nextPlayerTurn(playerNum) {
+    const nextPlayer =  playerNum + 1;
+    if (playerNum > -1) {
+      this.players[playerNum].isTurn = false;
     }
-    this.dealingService.currentPlayerTurn.next(this.currentPlayerTurn);
+    if (nextPlayer < 3) {
+      const nextPlayerTotal = this.players[nextPlayer].hand.reduce(this.dealingService.addCards, {value: 0}).value;
+      if (nextPlayerTotal < 21 ) {
+        this.players[nextPlayer].isTurn = true;
+      } else {
+        if (nextPlayer < 2) {
+          this.nextPlayerTurn(nextPlayer);
+        } else {
+          this.dealerAction();
+        }
+      }
+    } else {
+      this.dealerAction();
+    }
   }
 
+  async dealerAction() {
+    const dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
+    if (dealerTotal < 17) {
+      await this.delayedCardDeal(this.dealer);
+      this.dealerAction();
+    } else {
+      // end round
+      console.log('roundover');
+      this.hasStarted = false;
+    }
+  }
 }
