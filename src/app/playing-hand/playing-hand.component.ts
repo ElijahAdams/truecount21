@@ -21,10 +21,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     transition(':enter', [
       style({transform: 'translate({{x}}px , {{y}}px)'}),
       animate('500ms ease-in', style({transform: 'translate(0%, 0%)'}))
-    ], {params: {x: 1, y: 1}}),
-    transition(':leave', [
-      animate('500ms ease-in', style({transform: 'translate(-2000px, -2000px)'}))
-    ])
+    ], {params: {x: 1, y: 1}})
+    // transition(':leave', [
+    //   animate('500ms ease-in', style({transform: 'translate(-2000px, 0px)'}))
+    // ])
     ]
   )]
 })
