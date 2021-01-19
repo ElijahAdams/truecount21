@@ -139,6 +139,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else {
       this.nextPlayerTurn(-1);
     }
+
   }
 
   async delayedCardDeal(player) {
@@ -147,7 +148,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   delay() {
-    return new Promise(resolve => setTimeout(resolve, 700));
+    return new Promise(resolve => setTimeout(resolve, 600));
   }
 
   randomCard(max) {
@@ -263,19 +264,29 @@ export class AppComponent implements OnInit, AfterViewInit {
       const nextPlayerTotal = this.players[nextPlayer].hand.reduce(this.dealingService.addCards, {value: 0}).value;
       if (nextPlayerTotal < 21 ) {
         this.players[nextPlayer].isTurn = true;
+        // scroll player into view if their turn
+        this.scrollToPlayer(nextPlayer);
       } else if (this.twoAceHand(this.players[nextPlayer])) {
         this.checkAndModifyAces(this.players[nextPlayer]);
         this.players[nextPlayer].isTurn = true;
+        this.scrollToPlayer(nextPlayer);
       } else {
         if (nextPlayer < this.players.length - 1) {
           this.nextPlayerTurn(nextPlayer);
         } else {
+          this.scrollToPlayer(this.dealer.num);
           this.dealerAction();
         }
       }
     } else {
+      this.scrollToPlayer(this.dealer.num);
       this.dealerAction();
     }
+  }
+  scrollToPlayer(playerNum) {
+    // scroll player into view if their turn
+    const element = document.getElementById('player' + playerNum);
+    element.scrollIntoView({ block: 'end', behavior: 'smooth' });
   }
   twoAceHand(player) {
     let isTwoAces = false;

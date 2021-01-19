@@ -20,7 +20,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   animations: [trigger('cardDealing', [
     transition(':enter', [
       style({transform: 'translate({{x}}px , {{y}}px)'}),
-      animate('500ms ease-in', style({transform: 'translate(0%, 0%)'}))
+      animate('600ms ease-in', style({transform: 'translate(0%, 0%)'}))
     ], {params: {x: 1, y: 1, rx: 1, ry: 1}}),
     transition(':leave', [
       animate('500ms ease-in', style({transform: 'translate(-{{rx}}px, -{{ry}}px )'}))
