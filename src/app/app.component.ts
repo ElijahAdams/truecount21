@@ -95,11 +95,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (this.sixDeckCardArray.length < 78 ) {
       this.gameRestart();
     }
-    this.tableReset();
-    this.initialDeal();
-    this.hasStarted = true;
+    this.tableReset().then(value => {
+      this.initialDeal();
+      this.hasStarted = true;
+    });
   }
-  tableReset() {
+  async tableReset() {
+    this.dealingService.sweep.next('sweep');
+    if (this.hasStarted) {
+      await this.delay();
+    }
     this.players = [
       {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0},
       {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0},

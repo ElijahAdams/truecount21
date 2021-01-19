@@ -15,7 +15,7 @@
 
   <div class="cardContainer" #cardContainer [ngClass]="{'flexCardContainer': shouldStackCards }">
     <div class="cards" *ngIf="!player.isDealer" >
-      <img [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement}}" [ngClass]="{'over5Cards': shouldStackCards }"
+      <img [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement, rx:playerX, ry: playerY}}" [ngClass]="{'over5Cards': shouldStackCards }"
            class="cardimg" *ngFor="let card of player.hand; let i = index"
            src="../../assets/cards/{{card.card}}{{card.suite}}.svg"
            [ngStyle]="{'right': 60*i + 'px'}">

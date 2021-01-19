@@ -7,6 +7,7 @@ import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 export class DealingService {
   dealerScreenLocation;
   dealerHandReady = new ReplaySubject();
+  sweep = new ReplaySubject();
   constructor() { }
   addCards(a, b) {
     return {value: a.value + b.value};

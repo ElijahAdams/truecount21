@@ -21,10 +21,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     transition(':enter', [
       style({transform: 'translate({{x}}px , {{y}}px)'}),
       animate('500ms ease-in', style({transform: 'translate(0%, 0%)'}))
-    ], {params: {x: 1, y: 1}})
-    // transition(':leave', [
-    //   animate('500ms ease-in', style({transform: 'translate(-2000px, 0px)'}))
-    // ])
+    ], {params: {x: 1, y: 1, rx: 1, ry: 1}}),
+    transition(':leave', [
+      animate('500ms ease-in', style({transform: 'translate(-{{rx}}px, -{{ry}}px )'}))
+    ], {params: {x: 1, y: 1, rx: 1, ry: 1}})
     ]
   )]
 })
@@ -52,6 +52,10 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     this.dealingService.dealerHandReady.subscribe(dealerCoords => {
       // @ts-ignore
       this.yMovement += dealerCoords.y;
+      this.checkDealer(); // this is a hack;
+    });
+    this.dealingService.sweep.subscribe(value => {
+      this.removeCards();
     });
   }
   ngAfterViewInit() {
@@ -61,6 +65,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     this.playerY = clientRect.y + (clientRect.height / 2);
     this.xMovement = (screen.width / 2) - this.playerX;
     this.yMovement -= this.playerY;
+    this.checkDealer();
   }
 
   ngAfterViewChecked() {
@@ -115,5 +120,16 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
   }
   splitHand(playerNum) {
     this.split.emit(playerNum);
+  }
+  checkDealer() {
+    if (this.player.isDealer) {
+      this.xMovement = 0;
+      this.yMovement = 0;
+    }
+  }
+  removeCards() {
+    while (this.player.hand.length) {
+      this.player.hand.pop();
+    }
   }
 }
