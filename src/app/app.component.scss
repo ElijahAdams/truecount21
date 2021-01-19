@@ -74,23 +74,34 @@
   border-radius: 25%;
   min-width: 300px;
 }
-
 .players {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 5px;
 }
 
-.players > div {
-  border: 5px solid #ac2c0b;
-  border-radius: 25%;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  min-width: 300px;
-  margin: 10px;
+.playerHand {
+    border: 5px solid #ac2c0b;
+    border-radius: 25%;
+    text-align: center;
 }
+
+//.players {
+//  display: flex;
+//  flex-wrap: wrap;
+//}
+//
+//.players > div {
+//  border: 5px solid #ac2c0b;
+//  border-radius: 25%;
+//  flex: 1;
+//  display: flex;
+//  justify-content: center;
+//  flex-direction: column;
+//  align-items: center;
+//  min-width: 300px;
+//  margin: 10px;
+//}
 
 .playerTitle {
   font-size: 30px;
@@ -131,9 +142,6 @@ app-playing-hand {
 }
 
 @media(max-width: 1005px) {
-  .players > div {
-    flex: 1 1 100%;
-  }
   .runCountContainer {
     order: 1;
   }
