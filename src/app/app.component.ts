@@ -113,7 +113,6 @@ export class AppComponent implements OnInit {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
-    // this.dealer.hand.push({ card: '7', suite: 'spades', value: 7});
     this.initialHandCount();
     this.initialCount1Card(this.dealer, 1);
     this.addRunningCountAfterInitialHandDeal();

@@ -1,7 +1,16 @@
 /* tslint:disable:no-trailing-whitespace prefer-const */
-import {Component, Input, OnInit, AfterViewChecked, Output, ChangeDetectorRef, EventEmitter} from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  AfterViewChecked,
+  Output,
+  ChangeDetectorRef,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import {DealingService} from '../dealing.service';
-import has = Reflect.has;
 
 @Component({
   selector: 'app-playing-hand',
@@ -14,13 +23,16 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   @Output() hit = new EventEmitter();
   @Output() doubleDown = new EventEmitter();
   @Output() split = new EventEmitter();
+  @ViewChild('cardContainer', {static: false}) cardContainer: ElementRef;
   isBust = false;
   handTotal;
-  over5Cards = false;
+  shouldStackCards = false;
+  stackCenterPx = 0;
+  centerCards: 0;
   constructor(private dealingService: DealingService,
-              private cdr: ChangeDetectorRef) { }
-  ngOnInit() {
-  }
+              private cdr: ChangeDetectorRef,
+              private totalBody: ElementRef) { }
+  ngOnInit() {}
   ngAfterViewChecked() {
     this.cdr.detectChanges();
   }
@@ -41,7 +53,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     } else {
       totalDisplay = 'Total = ' + this.handTotal;
     }
-    this.over5Cards = this.player.hand.length > 5 ? true : false;
+
     return totalDisplay;
   }
   canSplit() {
@@ -58,6 +70,11 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
     return isGoodDouble;
   }
   hitPlayer(playerNum) {
+    if (this.player.hand.length + 1 > 4) {
+      this.shouldStackCards = true;
+      this.stackCenterPx =  (this.cardContainer.nativeElement.offsetWidth / 2) - (( this.player.hand.length) * 20);
+      (this.totalBody.nativeElement as HTMLElement).style.setProperty('--stackLeftMove', this.stackCenterPx + 'px');
+    }
     this.hit.emit(playerNum);
   }
   doubleDownPlayer(playerNum) {

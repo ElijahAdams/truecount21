@@ -33,6 +33,8 @@
 }
 .flexCardContainer {
   display: flex;
+  position: relative;
+  left: var(--stackLeftMove);
 }
 .cards {
   display: flex;
