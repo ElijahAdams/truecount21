@@ -18,18 +18,18 @@
   </div>
 
   <div class="dealer">
-    <div>
-      <p class="runningCountStatement">Running Count is</p>
+    <div class="runCountContainer">
+      <p class="countStatement">Running Count is</p>
       <p class="runningCount" [ngClass]="{'posCount': runningCount > 0, 'negCount':runningCount < 0 }">
         {{runningCount}}
       </p>
     </div>
-    <div>
+    <div class="dealerHand">
       <h2>Dealer</h2>
       <app-playing-hand [player]="dealer" ></app-playing-hand>
     </div>
-    <div>
-      <p class="countStatement">True Count is <span class="trueCountFormula">(Running Count / Decks Remaining)</span></p>
+    <div class="trueCountContainer">
+      <p class="countStatement">True Count is</p>
       <p class="runningCount" [ngClass]="{'posCount': trueCount > 0, 'negCount': trueCount < 0 }" >
         {{trueCount}}
       </p>
