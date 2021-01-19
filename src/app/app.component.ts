@@ -1,5 +1,5 @@
 /* tslint:disable:no-trailing-whitespace prefer-const */
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DealingService} from './dealing.service';
 
 @Component({
@@ -7,7 +7,7 @@ import {DealingService} from './dealing.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   /* Black jack dealing order
     1. deal 1 card to players first face up.
     2. deal 1 card to dealer face down
@@ -37,11 +37,20 @@ export class AppComponent implements OnInit {
   optimalBetUnit = 1;
   decksRemaining = 6;
   cardsInDeck = 52;
+  @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
   ngOnInit() {
     this.populateDeck();
     this.setShoots();
+  }
+
+  ngAfterViewInit() {
+    const clientRect = this.dealerHand.nativeElement.getBoundingClientRect();
+    const xOfDealer = clientRect.x + (clientRect.width / 2);
+    const yOfDealer = clientRect.y + (clientRect.height / 2);
+    this.dealingService.setDealerScreenLocation({x: xOfDealer, y: yOfDealer});
+    this.dealingService.dealerHandReady.next(this.dealingService.getDealerScreenLocation());
   }
   gameRestart() {
     this.populateDeck();

@@ -8,16 +8,27 @@ import {
   ChangeDetectorRef,
   EventEmitter,
   ViewChild,
-  ElementRef
+  ElementRef, AfterViewInit
 } from '@angular/core';
 import {DealingService} from '../dealing.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-playing-hand',
   templateUrl: './playing-hand.component.html',
-  styleUrls: ['./playing-hand.component.scss']
+  styleUrls: ['./playing-hand.component.scss'],
+  animations: [trigger('cardDealing', [
+    transition(':enter', [
+      style({transform: 'translate({{x}}px , {{y}}px)'}),
+      animate('500ms ease-in', style({transform: 'translate(0%, 0%)'}))
+    ], {params: {x: 1, y: 1}}),
+    transition(':leave', [
+      animate('500ms ease-in', style({transform: 'translate(-2000px, -2000px)'}))
+    ])
+    ]
+  )]
 })
-export class PlayingHandComponent implements OnInit, AfterViewChecked {
+export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() player;
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
@@ -29,10 +40,29 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked {
   shouldStackCards = false;
   stackCenterPx = 0;
   centerCards: 0;
+  showDealer = false;
+  playerX =  0;
+  playerY = 0;
+  xMovement = 0;
+  yMovement = 0;
   constructor(private dealingService: DealingService,
               private cdr: ChangeDetectorRef,
               private totalBody: ElementRef) { }
-  ngOnInit() {}
+  ngOnInit() {
+    this.dealingService.dealerHandReady.subscribe(dealerCoords => {
+      // @ts-ignore
+      this.yMovement += dealerCoords.y;
+    });
+  }
+  ngAfterViewInit() {
+    // center of self
+    const clientRect = this.cardContainer.nativeElement.getBoundingClientRect();
+    this.playerX = clientRect.x + (clientRect.width);
+    this.playerY = clientRect.y + (clientRect.height / 2);
+    this.xMovement = (screen.width / 2) - this.playerX;
+    this.yMovement -= this.playerY;
+  }
+
   ngAfterViewChecked() {
     this.cdr.detectChanges();
   }
