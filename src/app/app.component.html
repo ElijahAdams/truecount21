@@ -1,38 +1,41 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="grid-container">
   <div class="dealInfo">
-    <div class="pastShoot">
-      <div>
-        <p>Past Cards = {{pastCardsLength}}</p>
-        <p class="pastRectangle"></p>
+    <div class="cardData">
+      <div class="cardDataPoints" >
+        <p>Past Cards = <span>{{pastCardsLength}}</span></p>
+        <p>Future Cards = <span>{{sixDeckCardArray.length}}</span></p>
+        <p>Remaining Decks = <span>{{decksRemaining}}</span></p>
       </div>
     </div>
     <div class="dealButtonContainer">
       <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
     </div>
-    <div class="futureShoot">
-      <p>Future Cards = {{sixDeckCardArray.length}}</p>
-      <p>Remaining Decks = {{decksRemaining}}</p>
-      <p class="futureRectangle"></p>
+    <div class="countData">
+      <div class="countDataPoints">
+        <p> Running Count =
+          <span [ngClass]="{'posCount': runningCount > 0, 'negCount':runningCount < 0 }">{{runningCount}}</span>
+        </p>
+        <p> True Count =
+          <span [ngClass]="{'posCount': trueCount > 0, 'negCount': trueCount < 0 }" >{{trueCount}}</span>
+        </p>
+        <p> Optimal Bet Unit =
+          <span [ngClass]="{'posCount': optimalBetUnit > 1 }">{{optimalBetUnit}}</span>
+        </p>
+      </div>
     </div>
   </div>
 
   <div class="dealer">
     <div class="runCountContainer">
-      <p class="countStatement">Running Count is</p>
-      <p class="runningCount" [ngClass]="{'posCount': runningCount > 0, 'negCount':runningCount < 0 }">
-        {{runningCount}}
-      </p>
+
     </div>
     <div class="dealerHand">
       <p class="playerTitle">Dealer</p>
       <app-playing-hand [player]="dealer" ></app-playing-hand>
     </div>
     <div class="trueCountContainer">
-      <p class="countStatement">True Count is</p>
-      <p class="runningCount" [ngClass]="{'posCount': trueCount > 0, 'negCount': trueCount < 0 }" >
-        {{trueCount}}
-      </p>
+
     </div>
   </div>
 

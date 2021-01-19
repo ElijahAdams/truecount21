@@ -12,41 +12,68 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center;
   min-width: 100px;
   margin: 10px;
 }
-.pastShoot {
+.cardData {
+  border-left: #ac2c0b solid 2px;
+  border-bottom: #ac2c0b solid 2px;
   flex: 1;
+  align-items: flex-start;
 }
-.futureShoot {
+.countData {
+  border-right: #ac2c0b solid 2px;
+  border-bottom: #ac2c0b solid 2px;
   flex: 1;
+  align-items: flex-end;
 }
 .dealButtonContainer {
   flex: 1;
+  align-items: center;
+  height: 70px;
 }
-.pastShoot {
-  border-left: #ac2c0b solid 2px;
-  border-bottom: #ac2c0b solid 2px;
+
+.cardDataPoints {
+  margin-left: 5px;
+  font-size: 24px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
 }
-.futureShoot {
-  border-right: #ac2c0b solid 2px;
-  border-bottom: #ac2c0b solid 2px;
+.cardDataPoints > p {
+  flex: 1;
+  text-align: start;
+  white-space: nowrap;
 }
-.pastRectangle {
-  height: var(--pastHeight);
-  width: 100px;
-  background-color: #ac2c0b;
-  background-image: linear-gradient(#ac2c0b, #c50aed);
-  margin: auto;
+
+.countDataPoints {
+  margin-right: 5px;
+  font-size: 24px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
 }
-.futureRectangle {
-  height: var(--futureHeight);
-  width: 100px;
-  background-color: #ac2c0b;
-  background-image: linear-gradient(#ac2c0b, #c50aed);
-  margin: auto;
+.countDataPoints > p {
+  flex: 1;
+  text-align: end;
+  white-space: nowrap;
 }
+
+//
+//.pastRectangle {
+//  height: var(--pastHeight);
+//  width: 100px;
+//  background-color: #ac2c0b;
+//  background-image: linear-gradient(#ac2c0b, #c50aed);
+//  margin: auto;
+//}
+//.futureRectangle {
+//  height: var(--futureHeight);
+//  width: 100px;
+//  background-color: #ac2c0b;
+//  background-image: linear-gradient(#ac2c0b, #c50aed);
+//  margin: auto;
+//}
 .dealer {
   display: flex;
   flex-wrap: wrap;
@@ -73,6 +100,7 @@
   border: 5px solid #152b0d;
   border-radius: 25%;
   min-width: 300px;
+  box-shadow: 2px 3px 2px 1px #3f4e39;
 }
 .players {
   display: grid;
@@ -84,6 +112,7 @@
     border: 5px solid #ac2c0b;
     border-radius: 25%;
     text-align: center;
+    box-shadow: 2px 3px 2px 1px #634d45;
 }
 
 //.players {
@@ -152,16 +181,24 @@ app-playing-hand {
     order: 3;
     flex: 1 1 100%;
   }
-  .pastShoot {
+  .cardData {
     flex: 1;
     order: 1;
   }
-  .futureShoot {
+  .countData {
     flex: 1;
     order: 2;
   }
   .dealButtonContainer {
     flex: 1 1 100%;
     order: 3;
+  }
+  .cardDataPoints {
+    flex-direction: column;
+    align-items: center;
+  }
+  .countDataPoints {
+    flex-direction: column;
+    align-items: center;
   }
 }

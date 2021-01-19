@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
   hasStarted = false;
   runningCount = 0;
   trueCount = 0;
+  optimalBetUnit = 1;
   decksRemaining = 6;
   cardsInDeck = 52;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit {
     this.pastCardsLength = 0;
     this.runningCount = 0;
     this.trueCount = 0;
+    this.optimalBetUnit = 1;
     this.decksRemaining = 6;
   }
   populateDeck() {
@@ -350,6 +352,8 @@ export class AppComponent implements OnInit {
     // if running count greater than 0 find out truecount otherwise true count is zero.
     const theoreticalTrueCount =  Math.round(( this.runningCount / this.decksRemaining ) * 10) / 10;
     this.trueCount = this.runningCount > 0 ? theoreticalTrueCount : 0;
+    const trueCountFloor = Math.floor(this.trueCount);
+    this.optimalBetUnit = trueCountFloor > 1 ? trueCountFloor - 1 : 1;
     this.hasStarted = false;
   }
 
