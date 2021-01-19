@@ -304,6 +304,10 @@ export class AppComponent implements OnInit {
       this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
       this.dealerAction();
     } else if (this.dealerTotal === 17 && this.hasAce(this.dealer) ) {
+      await this.delay();
+      const card = this.deal();
+      this.dealer.hand.push(card);
+      this.updateCardCount(this.dealer, card);
       this.dealerTotal = this.checkAndModifyAces(this.dealer);
       this.dealerAction();
     } else if (this.twoAceHand(this.dealer)) {
