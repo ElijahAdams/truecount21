@@ -1,14 +1,3 @@
-@media(max-width: 700px) {
-  .runCountContainer {
-    order: 1;
-  }
-  .trueCountContainer {
-    order: 2;
-  }
-  .dealerHand {
-    order: 3;
-  }
-}
 .grid-container {
   display: flex;
   flex-direction: column;
@@ -17,19 +6,30 @@
 .dealInfo {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 .dealInfo > div {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   min-width: 300px;
+  margin: 10px;
 }
-.dealInfo > .pastShoot {
+.pastShoot {
+  flex: 1;
+}
+.futureShoot {
+  flex: 1;
+}
+.dealButtonContainer {
+  flex: 1;
+}
+.pastShoot {
   border-left: #ac2c0b solid 2px;
   border-bottom: #ac2c0b solid 2px;
 }
-
-.dealInfo > .futureShoot {
+.futureShoot {
   border-right: #ac2c0b solid 2px;
   border-bottom: #ac2c0b solid 2px;
 }
@@ -50,17 +50,29 @@
 .dealer {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .dealer > div {
-  flex: 1;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  min-width: 150px;
+  // min-width: 150px;
+  margin: 10px;
+}
+.runCountContainer {
+  flex: 1;
+}
+.trueCountContainer {
+ flex: 1;
 }
 .dealerHand {
+  flex: 1;
+}
+.dealerHand {
+  border: 5px solid #ac2c0b;
+  border-radius: 25%;
   min-width: 300px;
 }
 
@@ -78,6 +90,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 300px;
+  margin: 10px;
 }
 
 .playerTitle {
@@ -108,4 +121,28 @@
 }
 .trueCountFormula{
   font-size: 16px;
+}
+
+app-playing-hand {
+  width: 100%;
+}
+
+@media(max-width: 700px) {
+
+}
+
+@media(max-width: 1005px) {
+  .players > div {
+    flex: 1 1 100%;
+  }
+  .runCountContainer {
+    order: 1;
+  }
+  .trueCountContainer {
+    order: 2;
+  }
+  .dealerHand {
+    order: 3;
+    flex: 1 1 100%;
+  }
 }

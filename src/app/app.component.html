@@ -2,12 +2,12 @@
 <div class="grid-container">
   <div class="dealInfo">
     <div class="pastShoot">
-      <span>
-        Past Cards = {{pastCardsLength}}
+      <div>
+        <p>Past Cards = {{pastCardsLength}}</p>
         <p class="pastRectangle"></p>
-      </span>
+      </div>
     </div>
-    <div>
+    <div class="dealButtonContainer">
       <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
     </div>
     <div class="futureShoot">
@@ -25,7 +25,7 @@
       </p>
     </div>
     <div class="dealerHand">
-      <h2>Dealer</h2>
+      <p>Dealer</p>
       <app-playing-hand [player]="dealer" ></app-playing-hand>
     </div>
     <div class="trueCountContainer">
@@ -38,7 +38,7 @@
 
   <div class="players">
     <div *ngFor="let player of players">
-      <h2 class="playerTitle">Player {{player.num + 1}}</h2>
+      <p class="playerTitle">Player {{player.num + 1}}</p>
       <app-playing-hand [player]="player"
                         (nextPlayerTurn)="nextPlayerTurn($event)"
                         (hit)="hit($event)"

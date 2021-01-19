@@ -21,7 +21,7 @@
            [ngStyle]="{'right': 60*i + 'px'}"
       >
     </div>
-    <div *ngIf="player.isDealer">
+    <div *ngIf="player.isDealer" class="cards">
       <img class="cardimg"  *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
       <img class="cardimg"  *ngIf="player.hand.length > 1" src="../../assets/cards/{{player.hand[1].card}}{{player.hand[1].suite}}.svg">
     </div>

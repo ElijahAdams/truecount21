@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  width: 100%;
 }
 .runningCountContainer{
   display: flex;
@@ -21,6 +22,9 @@
 .col {
   flex: 1;
   height: 26px;
+  justify-content: center;
+  display: flex;
+  margin: 0 5px 0 5px;
 }
 
 .cardContainer {
@@ -62,4 +66,6 @@ button:hover {
 
 .actionRow {
   height: 40px;
+  display: flex;
+  justify-content: center;
 }
