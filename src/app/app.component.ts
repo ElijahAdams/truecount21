@@ -180,14 +180,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.players[playerNum].isTurn = false;
     const splitPlayer = {
       num: nextPlayerNum,
-      hand: [this.players[playerNum].hand[1]],
+      hand: [],
       isTurn: false,
       win: '',
       isDealer: false,
       count: 0
     };
     this.players.splice(nextPlayerNum, 0, splitPlayer);
-    this.players[playerNum].hand.pop();
+    const splitCard = this.players[playerNum].hand.pop();
     for (let i = playerNum + 2; i < this.players.length; i ++) {
       this.players[i].num = this.players[i].num + 1;
     }
@@ -199,6 +199,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.players[playerNum].hand.push(card1);
     this.updateCardCount(this.players[playerNum], card1);
     // await this.delayedCardDeal(this.players[nextPlayerNum]);
+    this.players[nextPlayerNum].hand.push(splitCard);
     this.initialCount1Card(this.players[nextPlayerNum], 0);
     await this.delay();
     const card2 = this.deal();
