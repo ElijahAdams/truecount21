@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : []},
     {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : []}
     ];
-  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0, winCount: 0, loseCount: 0};
+  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0};
   dealerTotal;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
@@ -116,7 +116,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     this.resetPlayerHands();
     // this.resetPlayerHands();
-    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0,  winCount: 0, loseCount: 0};
+    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0};
     this.dealerTotal = '';
   }
 
