@@ -9,7 +9,7 @@
       <span *ngIf="winnersUpdated && player.win==='Lose'" [@lickadyLose]>{{player.win}}</span>
       <span *ngIf="winnersUpdated && player.win==='Push'" [@pushadyPush]>{{player.win}}</span>
     </p>
-    <p class="col"></p>
+    <p class="col"> W: {{player.winCount}} /  L: {{player.loseCount}}</p>
   </div>
 
   <div class="scoreContainer">

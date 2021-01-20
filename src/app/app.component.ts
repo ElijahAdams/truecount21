@@ -1,4 +1,4 @@
-/* tslint:disable:no-trailing-whitespace prefer-const */
+/* tslint:disable:no-trailing-whitespace prefer-const max-line-length */
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DealingService} from './dealing.service';
 
@@ -21,11 +21,11 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   // Display betting units.
   players = [
-    {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0},
-    {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0},
-    {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0}
+    {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, splitFrom: ''},
+    {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, splitFrom: ''},
+    {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, splitFrom: ''}
     ];
-  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0};
+  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0, winCount: 0, loseCount: 0, splitFrom: ''};
   dealerTotal;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
@@ -58,6 +58,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.populateDeck();
     this.setShoots();
     this.tableReset();
+    this.players = [
+      {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, splitFrom: ''},
+      {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, splitFrom: ''},
+      {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, splitFrom: ''}
+    ];
     this.pastCardsLength = 0;
     this.runningCount = 0;
     this.trueCount = 0;
@@ -94,13 +99,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   startRound() {
+    this.hasStarted = true;
     if (this.sixDeckCardArray.length < 78 ) {
       this.gameRestart();
     }
 
     this.tableReset().then(value => {
       this.initialDeal();
-      this.hasStarted = true;
     });
   }
   async tableReset() {
@@ -109,12 +114,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (this.sixDeckCardArray.length !== 312) {
       await this.delay();
     }
-    this.players = [
-      {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0},
-      {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0},
-      {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0}
-    ];
-    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0};
+    this.resetPlayerHands();
+    // this.resetPlayerHands();
+    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0,  winCount: 0, loseCount: 0, splitFrom: ''};
     this.dealerTotal = '';
   }
 
@@ -148,7 +150,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   async delayedCardDeal(player) {
     await this.delay();
-    player.hand.push(this.deal());
+    // player.hand.push(this.deal());
+    player.hand.push({card: '2', suite: 'spades', value: 2});
   }
 
   delay() {
@@ -188,7 +191,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       isTurn: false,
       win: '',
       isDealer: false,
-      count: 0
+      count: 0,
+      winCount: 0,
+      loseCount: 0,
+      splitFrom: playerNum.toString()
     };
     this.isAnimationDisabled = true;
     this.players.splice(nextPlayerNum, 0, splitPlayer);
@@ -358,8 +364,10 @@ export class AppComponent implements OnInit, AfterViewInit {
         const playerTotal = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
         if (playerTotal <= 21 ) {
           player.win = 'Win';
+          player.winCount += 1;
         } else {
           player.win = 'Lose';
+          player.loseCount += 1;
         }
       }
     } else {
@@ -370,13 +378,16 @@ export class AppComponent implements OnInit, AfterViewInit {
             player.win = 'Push';
           } else {
             player.win = 'Win';
+            player.winCount += 1;
           }
         } else if (playerTotal > this.dealerTotal && playerTotal <= 21) {
           player.win = 'Win';
+          player.winCount += 1;
         } else if (playerTotal === this.dealerTotal) {
           player.win = 'Push';
         } else {
           player.win = 'Lose';
+          player.loseCount += 1;
         }
       }
     }
@@ -425,4 +436,30 @@ export class AppComponent implements OnInit, AfterViewInit {
     return allBusted;
   }
 
+  resetPlayerHands() {
+      // find where the split came from and add the winnings to orginal player. then splice it out.
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].splitFrom !== '') {
+        // const playerSplitFrom = parseInt(this.players[i].splitFrom, 10);
+        // this.players[playerSplitFrom].winCount += this.players[i].winCount;
+        // this.players[playerSplitFrom].loseCount += this.players[i].loseCount;
+        this.players.splice(i, 1);
+      }
+    }
+
+    // retain wins and loses and player number
+    for (let i = 0; i < this.players.length; i++) {
+     this.players[i] = {
+       num: i,
+       hand: [],
+       isTurn: false,
+       win: '',
+       isDealer: false,
+       count: 0,
+       winCount: this.players[i].winCount,
+       loseCount: this.players[i].loseCount,
+       splitFrom: ''
+     };
+    }
+  }
 }
