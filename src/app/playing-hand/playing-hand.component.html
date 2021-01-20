@@ -5,8 +5,10 @@
       <span [ngClass]="{'posCount': player.count > 0, 'negCount':player.count < 0 }"> {{player.count}}</span>
     </p>
     <p class="col">
-      <span *ngIf="winnersUpdated && player.win==='Win'" [@wiggleWin]>{{player.win}}</span>
-      <span *ngIf="winnersUpdated && player.win==='Lose'" [@lickadyLose]>{{player.win}}</span>
+      <span *ngIf="winnersUpdated && player.win==='Win'" [@wiggleWin]
+            [ngClass]="{'posCount': player.win==='Win', 'negCount': player.win==='Lose'}">{{player.win}}</span>
+      <span *ngIf="winnersUpdated && player.win==='Lose'" [@lickadyLose]
+            [ngClass]="{'posCount': player.win==='Win', 'negCount': player.win==='Lose'}">{{player.win}}</span>
       <span *ngIf="winnersUpdated && player.win==='Push'" [@pushadyPush]>{{player.win}}</span>
     </p>
     <p class="col"><span *ngIf="player.winCount !== undefined"> W: {{player.winCount}} /  L: {{player.loseCount}}</span></p>

@@ -34,7 +34,7 @@
 }
 
 .cardDataPoints {
-  margin-left: 5px;
+  margin-left: 10px;
   font-size: 24px;
   display: flex;
   width: 100%;
@@ -47,7 +47,7 @@
 }
 
 .countDataPoints {
-  margin-right: 5px;
+  margin-right: 10px;
   font-size: 24px;
   display: flex;
   width: 100%;
@@ -97,10 +97,9 @@
   flex: 1;
 }
 .dealerHand {
-  border: 5px solid #152b0d;
-  border-radius: 25%;
+  border: 3px solid #152b0d;
+  border-radius: 15%;
   min-width: 300px;
-  box-shadow: 2px 3px 2px 1px #3f4e39;
 }
 .players {
   display: grid;
@@ -109,10 +108,10 @@
 }
 
 .playerHand {
-    border: 5px solid #ac2c0b;
-    border-radius: 25%;
+    border-radius: 15%;
+    background-color: #103310;
     text-align: center;
-    box-shadow: 2px 3px 2px 1px #634d45;
+    margin: 0 10px;
 }
 
 //.players {
@@ -139,7 +138,7 @@
 .dealButton {
   color: white;
   background-color: transparent;
-  border: solid white 3px;
+  border: solid white 2px;
   border-radius: 5px;
   width: 75px;
   height: 50px;
@@ -149,6 +148,7 @@
 
 .dealButton:hover {
   background-color: #65a32d;
+  border: none;
 }
 
 .runningCount {

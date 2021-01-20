@@ -29,7 +29,7 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
     ]),
     trigger('wiggleWin', [
       transition(':enter', [
-        style({transform: 'scale(3)', color: 'yellow'}),
+        style({transform: 'scale(3)'}),
         animate(
           '3000ms',
           keyframes([
@@ -45,7 +45,7 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
     ]),
     trigger('lickadyLose', [
       transition(':enter', [
-        style({transform: 'scale(3) rotate(0deg)', color: 'red'}),
+        style({transform: 'scale(3) rotate(0deg)'}),
         animate(
           '3000ms',
           keyframes([
