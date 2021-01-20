@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="players">
+  <div class="players" [@.disabled]="isAnimationDisabled">
     <div *ngFor="let player of players" class="playerHand" >
       <p class="playerTitle">Player {{player.num + 1}}</p>
       <app-playing-hand id="player{{player.num}}"

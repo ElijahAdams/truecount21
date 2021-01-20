@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   optimalBetUnit = 1;
   decksRemaining = 6;
   cardsInDeck = 52;
+  isAnimationDisabled = false;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
@@ -187,6 +188,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       isDealer: false,
       count: 0
     };
+    this.isAnimationDisabled = true;
     this.players.splice(nextPlayerNum, 0, splitPlayer);
     const splitCard = this.players[playerNum].hand.pop();
     for (let i = playerNum + 2; i < this.players.length; i ++) {
@@ -196,6 +198,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     // this.delayedCardDeal(this.players[playerNum]);
     this.initialCount1Card(this.players[playerNum], 0);
     await this.delay();
+    this.isAnimationDisabled = false;
     const card1 = this.deal();
     this.players[playerNum].hand.push(card1);
     this.updateCardCount(this.players[playerNum], card1);
