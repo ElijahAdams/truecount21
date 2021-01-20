@@ -32,7 +32,7 @@
     </div>
     <div class="dealerHand" #dealerHand>
       <p class="playerTitle">Dealer</p>
-      <app-playing-hand id="player{{dealer.num}}" [player]="dealer" ></app-playing-hand>
+      <app-playing-hand id="player{{dealer.num}}" [player]="dealer" [winnersUpdated]="winnersUpdated" ></app-playing-hand>
     </div>
     <div class="trueCountContainer">
 
@@ -44,6 +44,7 @@
       <p class="playerTitle">Player {{player.num + 1}}</p>
       <app-playing-hand id="player{{player.num}}"
                         [player]="player"
+                        [winnersUpdated]="winnersUpdated"
                         (nextPlayerTurn)="nextPlayerTurn($event)"
                         (hit)="hit($event)"
                         (doubleDown)="doubleDown($event)"

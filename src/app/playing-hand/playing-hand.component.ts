@@ -11,25 +11,77 @@ import {
   ElementRef, AfterViewInit
 } from '@angular/core';
 import {DealingService} from '../dealing.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-playing-hand',
   templateUrl: './playing-hand.component.html',
   styleUrls: ['./playing-hand.component.scss'],
-  animations: [trigger('cardDealing', [
-    transition(':enter', [
-      style({transform: 'translate({{x}}px , {{y}}px)'}),
-      animate('600ms ease-in', style({transform: 'translate(0%, 0%)'}))
-    ], {params: {x: 1, y: 1, rx: 1, ry: 1}}),
-    transition(':leave', [
-      animate('500ms ease-in', style({transform: 'translate(-{{rx}}px, -{{ry}}px )'}))
-    ], {params: {x: 1, y: 1, rx: 1, ry: 1}})
-    ]
-  )]
+  animations: [
+    trigger('cardDealing', [
+      transition(':enter', [
+        style({transform: 'translate({{x}}px , {{y}}px)'}),
+        animate('600ms ease-in', style({transform: 'translate(0%, 0%)'}))
+      ], {params: {x: 1, y: 1, rx: 1, ry: 1}}),
+      transition(':leave', [
+        animate('500ms ease-in', style({transform: 'translate(-{{rx}}px, -{{ry}}px )'}))
+      ], {params: {x: 1, y: 1, rx: 1, ry: 1}})
+    ]),
+    trigger('wiggleWin', [
+      transition(':enter', [
+        style({transform: 'scale(3)', color: 'yellow'}),
+        animate(
+          '3000ms',
+          keyframes([
+            style({transform: 'scale(1)'}),
+            style({transform: 'scale(3)'}),
+            style({transform: 'scale(1)'}),
+            style({transform: 'scale(3)'}),
+            style({transform: 'scale(1)'}),
+            style({transform: 'scale(3)'}),
+            style({transform: 'scale(1)'})
+          ]))
+      ])
+    ]),
+    trigger('lickadyLose', [
+      transition(':enter', [
+        style({transform: 'scale(3) rotate(0deg)', color: 'red'}),
+        animate(
+          '3000ms',
+          keyframes([
+            style({transform: 'scale(2.75) rotate(90deg)'}),
+            style({transform: 'scale(2.5) rotate(180deg)'}),
+            style({transform: 'scale(2.25) rotate(270deg)'}),
+            style({transform: 'scale(2) rotate(360deg)'}),
+            style({transform: 'scale(1.75) rotate(450deg)'}),
+            style({transform: 'scale(1.5) rotate(540deg)'}),
+            style({transform: 'scale(1.25) rotate(630deg)'}),
+            style({transform: 'scale(1) rotate(720deg)'})
+          ]))
+      ])
+    ]),
+    trigger('pushadyPush', [
+      transition(':enter', [
+        style({transform: 'scale(3) translateX(0px)' }),
+        animate(
+          '3000ms',
+          keyframes([
+            style({transform: 'scale(2.75) translateX(5px)'}),
+            style({transform: 'scale(2.5) translateX(-5px)'}),
+            style({transform: 'scale(2.25) translateX(5px)'}),
+            style({transform: 'scale(2) translateX(-5px)'}),
+            style({transform: 'scale(1.75) translateX(5px)'}),
+            style({transform: 'scale(1.5) translateX(-5px)'}),
+            style({transform: 'scale(1.25) translateX(5px)'}),
+            style({transform: 'scale(1) translateX(0px)'})
+          ]))
+      ])
+    ])
+  ]
 })
 export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() player;
+  @Input() winnersUpdated;
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
   @Output() doubleDown = new EventEmitter();

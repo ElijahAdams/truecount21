@@ -38,6 +38,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   decksRemaining = 6;
   cardsInDeck = 52;
   isAnimationDisabled = false;
+  winnersUpdated = false;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
@@ -103,6 +104,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
   async tableReset() {
+    this.winnersUpdated = false;
     this.dealingService.sweep.next('sweep');
     if (this.sixDeckCardArray.length !== 312) {
       await this.delay();
@@ -385,6 +387,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     const trueCountFloor = Math.floor(this.trueCount);
     this.optimalBetUnit = trueCountFloor > 1 ? trueCountFloor - 1 : 1;
     this.hasStarted = false;
+    this.winnersUpdated = true;
   }
 
   hasAce(player) {
