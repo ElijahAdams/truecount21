@@ -95,6 +95,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (this.sixDeckCardArray.length < 78 ) {
       this.gameRestart();
     }
+
     this.tableReset().then(value => {
       this.initialDeal();
       this.hasStarted = true;
@@ -102,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   async tableReset() {
     this.dealingService.sweep.next('sweep');
-    if (this.hasStarted) {
+    if (this.sixDeckCardArray.length !== 312) {
       await this.delay();
     }
     this.players = [
