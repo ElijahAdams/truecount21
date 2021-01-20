@@ -20,8 +20,8 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
   animations: [
     trigger('cardDealing', [
       transition(':enter', [
-        style({transform: 'translate({{x}}px , {{y}}px)'}),
-        animate('600ms ease-in', style({transform: 'translate(0%, 0%)'}))
+        style({transform: 'translate({{x}}px , {{y}}px)', opacity: '0'}),
+        animate('600ms ease-in', style({transform: 'translate(0%, 0%)', opacity: '1'}))
       ], {params: {x: 1, y: 1, rx: 1, ry: 1}}),
       transition(':leave', [
         animate('500ms ease-in', style({transform: 'translate(-{{rx}}px, -{{ry}}px )'}))
@@ -82,6 +82,7 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
 export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() player;
   @Input() winnersUpdated;
+  @Input() isCheckedCountHints;
   @Output() nextPlayerTurn = new EventEmitter();
   @Output() hit = new EventEmitter();
   @Output() doubleDown = new EventEmitter();
@@ -115,7 +116,8 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     const clientRect = this.cardContainer.nativeElement.getBoundingClientRect();
     this.playerX = clientRect.x + (clientRect.width);
     this.playerY = clientRect.y + (clientRect.height / 2);
-    this.xMovement = (screen.width / 2) - this.playerX;
+    // I don't like the X movement so commenting it out.
+    // this.xMovement = (screen.width / 2) - this.playerX;
     this.yMovement -= this.playerY;
     this.checkDealer();
   }

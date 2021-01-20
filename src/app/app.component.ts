@@ -39,6 +39,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   cardsInDeck = 52;
   isAnimationDisabled = false;
   winnersUpdated = false;
+  isCheckedDeckHints = true;
+  isCheckedCountHints = true;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }

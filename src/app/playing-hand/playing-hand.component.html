@@ -2,7 +2,8 @@
 
   <div class="runningCountContainer">
     <p class="col">Hand Count = &nbsp;
-      <span [ngClass]="{'posCount': player.count > 0, 'negCount':player.count < 0 }"> {{player.count}}</span>
+      <span [ngClass]="{'posCount': player.count > 0 && isCheckedCountHints, 'negCount':player.count < 0 && isCheckedCountHints }">
+        {{ isCheckedCountHints ? player.count : '?'}}</span>
     </p>
     <p class="col">
       <span *ngIf="winnersUpdated && player.win==='Win'" [@wiggleWin]
@@ -21,9 +22,11 @@
 
   <div class="cardContainer" #cardContainer [ngClass]="{'flexCardContainer': shouldStackCards }">
     <div class="cards" *ngIf="!player.isDealer" >
-      <img [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement, rx:playerX, ry: playerY}}"
+      <img
+        *ngFor="let card of player.hand; let i = index"
+        [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement, rx:playerX, ry: playerY}}"
            [ngClass]="{'over5Cards': shouldStackCards }"
-           class="cardimg" *ngFor="let card of player.hand; let i = index"
+           class="cardimg"
            src="../../assets/cards/{{card.card}}{{card.suite}}.svg"
            [ngStyle]="{'right': 60*i + 'px'}">
     </div>

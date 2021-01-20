@@ -27,6 +27,11 @@
   flex: 1;
   align-items: flex-end;
 }
+.countDataToggle {
+  margin: 0 10px 10px 0;
+  text-align: end;
+  width: 100%;
+}
 .dealButtonContainer {
   flex: 1;
   align-items: center;
@@ -200,5 +205,8 @@ app-playing-hand {
   .countDataPoints {
     flex-direction: column;
     align-items: center;
+  }
+  .countDataToggle {
+    text-align: center;
   }
 }
