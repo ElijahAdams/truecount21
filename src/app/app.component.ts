@@ -132,7 +132,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       await this.delayedCardDeal(player);
     }
     await this.delayedCardDeal(this.dealer);
-    // this.dealer.hand.push({ card: '9', suite: 'spades', value: 9});
     for (const player of this.players) {
       await this.delayedCardDeal(player);
     }
@@ -201,27 +200,34 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.players.splice(nextPlayerNum, 0, splitPlayer);
     this.players[playerNum].children.push(nextPlayerNum); // add splice player relationship.
     const splitCard = this.players[playerNum].hand.pop();
+    if (splitCard.value === 1) {
+      splitCard.value = 11;
+      this.players[playerNum].hand[0].value = 11;
+    }
     for (let i = playerNum + 2; i < this.players.length; i ++) {
       this.players[i].num = this.players[i].num + 1;
     }
     this.dealer.num = this.players.length;
-    // this.delayedCardDeal(this.players[playerNum]);
     this.initialCount1Card(this.players[playerNum], 0);
     await this.delay();
     this.isAnimationDisabled = false;
     const card1 = this.deal();
     this.players[playerNum].hand.push(card1);
     this.updateCardCount(this.players[playerNum], card1);
-    // await this.delayedCardDeal(this.players[nextPlayerNum]);
+
     this.players[nextPlayerNum].hand.push(splitCard);
     this.initialCount1Card(this.players[nextPlayerNum], 0);
     await this.delay();
     const card2 = this.deal();
     this.players[nextPlayerNum].hand.push(card2);
     this.updateCardCount(this.players[nextPlayerNum], card2);
-    this.players[playerNum].isTurn = true;
-    if (this.players[playerNum].hand.reduce(this.dealingService.addCards, {value: 0}).value === 21) {
+    // figure out who's turn it is.
+    if (splitCard.card === 'A') {
+      this.nextPlayerTurn(nextPlayerNum);
+    } else if (this.players[playerNum].hand.reduce(this.dealingService.addCards, {value: 0}).value === 21) {
       this.nextPlayerTurn(playerNum);
+    } else {
+      this.players[playerNum].isTurn = true;
     }
   }
 
@@ -413,7 +419,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     let currentValue = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     if (currentValue > 21) {
       this.modifyAces(player);
-      this.modifyAces(player);
     }
     currentValue = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     return currentValue;
@@ -423,7 +428,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     for (const card of player.hand) {
       if (card.value === 11) {
         card.value = 1;
-        return;
+        break;
       }
     }
   }

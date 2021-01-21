@@ -22,7 +22,10 @@ p {
 h2 {
   margin: 10px 0 10px 0;
 }
-
+button {
+  outline: none;
+  box-shadow: none;
+}
 .posCount {
   color: yellow;
 }
