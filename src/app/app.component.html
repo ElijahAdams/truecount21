@@ -11,7 +11,7 @@
           +
         </button>
       </div>
-      <div class="cardDataPoints" >
+      <div  class="cardDataPoints" >
         <p>Past Cards = <span>{{pastCardsLength}}</span></p>
         <p>Future Cards = <span>{{sixDeckCardArray.length}}</span></p>
         <p>Remaining Decks = <span>{{decksRemaining}}</span></p>
@@ -20,9 +20,9 @@
     <div class="dealButtonContainer">
       <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
     </div>
-    <div class="countData">
+    <div  class="countData">
       <div class="countDataToggle"><mat-slide-toggle [(ngModel)]="isCheckedCountHints">Count Hints</mat-slide-toggle></div>
-      <div class="countDataPoints">
+      <div id="countDataPoints" class="countDataPoints">
         <p> Running Count =
           <span [ngClass]="{'posCount': runningCount > 0 && isCheckedCountHints, 'negCount':runningCount < 0 && isCheckedCountHints }">
             {{isCheckedCountHints ? runningCount : '?'}}
@@ -70,6 +70,14 @@
     </div>
   </div>
 </div>
-<!--<div class="countBubble"> </div>-->
+<div *ngIf="showCountBubble" class="countBubble" [@showingCountBubble]>
+  <p>vs Dealer {{dealer.isDealer && dealer.hand.length > 1 ?  dealer.hand[1].value : dealerTotal }}</p>
+  <p [ngClass]="{'posCount': runningCount > 0 && isCheckedCountHints,
+    'negCount':runningCount < 0 && isCheckedCountHints }">
+    RC: {{isCheckedCountHints ? runningCount : '?'}}</p>
+  <p [ngClass]="{'posCount': trueCount > 0 && isCheckedCountHints,
+    'negCount': trueCount < 0 && isCheckedCountHints }">
+    TC: {{isCheckedCountHints ? trueCount : '?'}}</p>
+</div>
 
 

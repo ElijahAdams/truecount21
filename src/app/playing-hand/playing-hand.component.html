@@ -15,7 +15,7 @@
     <p class="col"><span *ngIf="player.winCount !== undefined"> W: {{player.winCount}} /  L: {{player.loseCount}}</span></p>
   </div>
 
-  <div class="scoreContainer">
+  <div id="scoreContainer{{player.num}}" class="scoreContainer">
     <span *ngIf="!player.isDealer && player.hand.length > 0" [ngClass]="{'bustHand': isBust }">{{determineTotal()}}</span>
     <span *ngIf="player.isDealer && player.hand.length > 1">Showing {{player.hand[1].value}}</span>
   </div>
@@ -26,6 +26,7 @@
         *ngFor="let card of player.hand; let i = index"
         [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement, rx:playerX, ry: playerY}}"
         [ngClass]="{'over5Cards': shouldStackCards}"
+        [ngStyle]="{'right': (i - (player.hand.length / 2))* 60 + 'px'}"
         class="cardimg"
         src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
     </div>

@@ -164,6 +164,11 @@ app-playing-hand {
 }
 .countBubble {
   visibility: hidden;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 0px;
   width: 0px;
   background: black;

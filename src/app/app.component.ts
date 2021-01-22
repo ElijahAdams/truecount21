@@ -1,11 +1,24 @@
 /* tslint:disable:no-trailing-whitespace prefer-const max-line-length */
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DealingService} from './dealing.service';
+import {fromEvent} from 'rxjs';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('showingCountBubble', [
+      transition(':enter', [
+        style({ opacity: '0'}),
+        animate('400ms ease-in', style({opacity: '1'}))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({opacity: 0}))
+      ])
+    ]),
+  ]
 })
 export class AppComponent implements OnInit, AfterViewInit {
   /* Black jack dealing order
@@ -39,14 +52,23 @@ export class AppComponent implements OnInit, AfterViewInit {
   cardsInDeck = 52;
   isAnimationDisabled = false;
   winnersUpdated = false;
-  isCheckedDeckHints = true;
   isCheckedCountHints = true;
+  showCountBubble = false;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
   ngOnInit() {
     this.populateDeck();
     this.setShoots();
+    fromEvent(window, 'scroll').subscribe(e => {
+      console.log('scrolling');
+      const dealerScroreCoods = document.getElementById('countDataPoints' ).getBoundingClientRect();
+      if (dealerScroreCoods.top <= -5) {
+        this.showCountBubble = true;
+      } else {
+        this.showCountBubble = false;
+      }
+    });
   }
 
   ngAfterViewInit() {
