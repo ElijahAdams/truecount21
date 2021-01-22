@@ -56,6 +56,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dealingService.setDealerScreenLocation({x: xOfDealer, y: yOfDealer});
     this.dealingService.dealerHandReady.next(this.dealingService.getDealerScreenLocation());
   }
+  addPlayers() {
+    const newPlayer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : []};
+    this.players.push(newPlayer);
+  }
+  subtractPlayers() {
+    this.players.pop();
+  }
   gameRestart() {
     this.populateDeck();
     this.setShoots();
@@ -139,6 +146,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.initialHandCount();
     this.initialCount1Card(this.dealer, 1);
     this.addRunningCountAfterInitialHandDeal();
+    const theoreticalTrueCount =  Math.round(( this.runningCount / this.decksRemaining ) * 10) / 10;
+    this.trueCount = theoreticalTrueCount;
     this.dealerTotal = this.dealer.hand.reduce(this.dealingService.addCards, {value: 0}).value;
     // if dealer has blackjack check pushes and go to next round;
     if (this.dealerTotal === 21 ) {
@@ -366,7 +375,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  determineWinners() {
+  async determineWinners() {
+    await this.delay();
     if (this.dealerTotal > 21) {
       for (const player of this.players) {
         const playerTotal = player.hand.reduce(this.dealingService.addCards, {value: 0}).value;
@@ -402,9 +412,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.decksRemaining = Math.round((this.sixDeckCardArray.length / this.cardsInDeck) * 10) / 10;
     // if running count greater than 0 find out truecount otherwise true count is zero.
     const theoreticalTrueCount =  Math.round(( this.runningCount / this.decksRemaining ) * 10) / 10;
-    this.trueCount = this.runningCount > 0 ? theoreticalTrueCount : 0;
-    const trueCountFloor = Math.floor(this.trueCount);
-    this.optimalBetUnit = trueCountFloor > 1 ? trueCountFloor - 1 : 1;
+    this.trueCount = theoreticalTrueCount;
+    this.optimalBetUnit = this.trueCount > 1 ? this.trueCount - 1 : 1;
     this.hasStarted = false;
     this.winnersUpdated = true;
   }

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlayingHandComponent } from './playing-hand/playing-hand.component';
@@ -17,6 +18,7 @@ import {FormsModule} from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatButtonModule,
     FormsModule
   ],
   providers: [],

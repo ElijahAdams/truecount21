@@ -142,7 +142,11 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     } else {
       totalDisplay = 'Total = ' + this.handTotal;
     }
-
+    if (this.player.hand.length + 1 > 5) {
+      this.shouldStackCards = true;
+      this.stackCenterPx =  (this.cardContainer.nativeElement.offsetWidth / 2) - (( this.player.hand.length) * 20);
+      (this.totalBody.nativeElement as HTMLElement).style.setProperty('--stackLeftMove', this.stackCenterPx + 'px');
+    }
     return totalDisplay;
   }
   canSplit() {
@@ -159,11 +163,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     return isGoodDouble;
   }
   hitPlayer(playerNum) {
-    if (this.player.hand.length + 1 > 4) {
-      this.shouldStackCards = true;
-      this.stackCenterPx =  (this.cardContainer.nativeElement.offsetWidth / 2) - (( this.player.hand.length) * 20);
-      (this.totalBody.nativeElement as HTMLElement).style.setProperty('--stackLeftMove', this.stackCenterPx + 'px');
-    }
+
     this.hit.emit(playerNum);
   }
   doubleDownPlayer(playerNum) {

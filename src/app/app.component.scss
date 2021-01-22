@@ -32,6 +32,14 @@
   text-align: end;
   width: 100%;
 }
+.addPlayersContainer {
+    margin: 0 0 10px 10px;
+    text-align: start;
+    width: 100%;
+}
+.amountOfPlayers {
+  margin: 0 10px;
+}
 .dealButtonContainer {
   flex: 1;
   align-items: center;
@@ -114,27 +122,11 @@
 
 .playerHand {
     border-radius: 15%;
-    background-color: #103310;
+    //background-color: #103310;
+    background: radial-gradient(#103310, #0d2f0d);
     text-align: center;
     margin: 0 10px;
 }
-
-//.players {
-//  display: flex;
-//  flex-wrap: wrap;
-//}
-//
-//.players > div {
-//  border: 5px solid #ac2c0b;
-//  border-radius: 25%;
-//  flex: 1;
-//  display: flex;
-//  justify-content: center;
-//  flex-direction: column;
-//  align-items: center;
-//  min-width: 300px;
-//  margin: 10px;
-//}
 
 .playerTitle {
   font-size: 30px;
@@ -170,12 +162,24 @@
 app-playing-hand {
   width: 100%;
 }
-
-@media(max-width: 700px) {
-
+.countBubble {
+  visibility: hidden;
+  height: 0px;
+  width: 0px;
+  background: black;
+  position: fixed;
+  right: 0;
+  bottom: 230px;
+  border-radius: 50%;
+  border: white solid 2px;
 }
-
 @media(max-width: 1005px) {
+  .countBubble {
+    visibility: visible;
+    height: 100px;
+    width: 100px;
+    z-index: 99;
+  }
   .runCountContainer {
     order: 1;
   }
@@ -207,6 +211,9 @@ app-playing-hand {
     align-items: center;
   }
   .countDataToggle {
+    text-align: center;
+  }
+  .addPlayersContainer {
     text-align: center;
   }
 }

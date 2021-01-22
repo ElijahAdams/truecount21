@@ -2,6 +2,15 @@
 <div class="grid-container">
   <div class="dealInfo">
     <div class="cardData">
+      <div class="addPlayersContainer">
+        <button [disabled]="hasStarted || players.length === 1" mat-mini-fab (click)="subtractPlayers()">
+          -
+        </button>
+          <span class="amountOfPlayers">{{players.length}} Players</span>
+        <button [disabled]="hasStarted || players.length === 6" mat-mini-fab (click)="addPlayers()">
+          +
+        </button>
+      </div>
       <div class="cardDataPoints" >
         <p>Past Cards = <span>{{pastCardsLength}}</span></p>
         <p>Future Cards = <span>{{sixDeckCardArray.length}}</span></p>
@@ -61,5 +70,6 @@
     </div>
   </div>
 </div>
+<!--<div class="countBubble"> </div>-->
 
 

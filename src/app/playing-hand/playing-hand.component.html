@@ -20,15 +20,14 @@
     <span *ngIf="player.isDealer && player.hand.length > 1">Showing {{player.hand[1].value}}</span>
   </div>
 
-  <div class="cardContainer" #cardContainer [ngClass]="{'flexCardContainer': shouldStackCards }">
+  <div class="cardContainer" #cardContainer >
     <div class="cards" *ngIf="!player.isDealer" >
       <img
         *ngFor="let card of player.hand; let i = index"
         [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement, rx:playerX, ry: playerY}}"
-           [ngClass]="{'over5Cards': shouldStackCards }"
-           class="cardimg"
-           src="../../assets/cards/{{card.card}}{{card.suite}}.svg"
-           [ngStyle]="{'right': 60*i + 'px'}">
+        [ngClass]="{'over5Cards': shouldStackCards}"
+        class="cardimg"
+        src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
     </div>
     <div *ngIf="player.isDealer" class="cards">
       <img class="cardimg"  *ngIf="player.hand.length > 0" src="../../assets/cards/backCard.svg">
