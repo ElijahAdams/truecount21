@@ -49,6 +49,9 @@
   border: black solid 1px;
   position: relative;
 }
+.doubleDown {
+  transform: rotate(90deg);
+}
 button {
   color: white;
   background-color: transparent;

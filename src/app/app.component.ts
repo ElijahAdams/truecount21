@@ -1,5 +1,5 @@
 /* tslint:disable:no-trailing-whitespace prefer-const max-line-length */
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {DealingService} from './dealing.service';
 import {fromEvent} from 'rxjs';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -56,6 +56,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   showCountBubble = false;
   currentSplits = 0;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.code === 'Space' && !this.hasStarted) {
+      this.startRound();
+    }
+  }
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
   ngOnInit() {
@@ -113,7 +119,8 @@ export class AppComponent implements OnInit, AfterViewInit {
           newCard = {
             card,
             suite,
-            value
+            value,
+            dd: false
           };
           this.sixDeckCardArray.push(newCard);
         });
@@ -181,7 +188,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else {
       this.nextPlayerTurn(-1);
     }
-
   }
 
   async delayedCardDeal(player) {
@@ -212,6 +218,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
   doubleDown(event) {
     const card = this.deal();
+    card.dd = true;
     this.players[event].hand.push(card);
     this.updateCardCount(this.players[event], card);
     this.checkAndModifyAces(this.players[event]);
@@ -440,7 +447,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     // if running count greater than 0 find out truecount otherwise true count is zero.
     const theoreticalTrueCount =  Math.round(( this.runningCount / this.decksRemaining ) * 10) / 10;
     this.trueCount = theoreticalTrueCount;
-    this.optimalBetUnit = this.trueCount >= 2 ? Math.round((this.trueCount - 1) * 10) : 1;
+    this.optimalBetUnit = this.trueCount >= 2 ? Math.round((this.trueCount - 1) * 10) / 10 : 1;
     this.hasStarted = false;
     this.winnersUpdated = true;
   }

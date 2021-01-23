@@ -8,7 +8,7 @@ import {
   ChangeDetectorRef,
   EventEmitter,
   ViewChild,
-  ElementRef, AfterViewInit
+  ElementRef, AfterViewInit, HostListener
 } from '@angular/core';
 import {DealingService} from '../dealing.service';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
@@ -20,9 +20,9 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
   animations: [
     trigger('cardDealing', [
       transition(':enter', [
-        style({transform: 'translate({{x}}px , {{y}}px)', opacity: '0'}),
-        animate('600ms ease-in', style({transform: 'translate(0%, 0%)', opacity: '1'}))
-      ], {params: {x: 1, y: 1, rx: 1, ry: 1}}),
+        style({transform: 'translate({{x}}px , {{y}}px) rotate(0)', opacity: '0'}),
+        animate('600ms ease-in', style({transform: 'translate(0%, 0%) rotate({{degrees}}deg)', opacity: '1'}))
+      ], {params: {x: 1, y: 1, rx: 1, ry: 1, degrees: 0}}),
       transition(':leave', [
         animate('500ms ease-in', style({transform: 'translate(-{{rx}}px, -{{ry}}px )'}))
       ], {params: {x: 1, y: 1, rx: 1, ry: 1}})
@@ -165,7 +165,6 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     return isGoodDouble;
   }
   hitPlayer(playerNum) {
-
     this.hit.emit(playerNum);
   }
   doubleDownPlayer(playerNum) {
