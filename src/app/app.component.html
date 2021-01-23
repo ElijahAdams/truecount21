@@ -6,8 +6,8 @@
         <button [disabled]="hasStarted || players.length === 1" mat-mini-fab (click)="subtractPlayers()">
           -
         </button>
-          <span class="amountOfPlayers">{{players.length}} Players</span>
-        <button [disabled]="hasStarted || players.length === 6" mat-mini-fab (click)="addPlayers()">
+          <span class="amountOfPlayers">{{players.length - currentSplits}} Players</span>
+        <button [disabled]="hasStarted || players.length - currentSplits === 6" mat-mini-fab (click)="addPlayers()">
           +
         </button>
       </div>
@@ -58,7 +58,7 @@
 
   <div class="players" [@.disabled]="isAnimationDisabled">
     <div *ngFor="let player of players" class="playerHand" >
-      <p class="playerTitle">Player {{player.num + 1}}</p>
+      <p class="playerTitle">{{playerTitle(player)}}</p>
       <app-playing-hand id="player{{player.num}}"
                         [player]="player"
                         [winnersUpdated]="winnersUpdated"

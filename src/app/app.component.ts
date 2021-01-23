@@ -34,11 +34,11 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   // Display betting units.
   players = [
-    {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : []},
-    {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : []},
-    {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : []}
+    {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : [], parent: null},
+    {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : [], parent: null},
+    {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0, winCount: 0, loseCount: 0, children : [], parent: null}
     ];
-  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0};
+  dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0, parent: null};
   dealerTotal;
   singleDeckCardArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
   suites = ['spades', 'clubs', 'hearts', 'diamonds'];
@@ -54,6 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   winnersUpdated = false;
   isCheckedCountHints = true;
   showCountBubble = false;
+  currentSplits = 0;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   constructor(private dealingService: DealingService, private totalBody: ElementRef) {
   }
@@ -61,7 +62,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.populateDeck();
     this.setShoots();
     fromEvent(window, 'scroll').subscribe(e => {
-      console.log('scrolling');
       const dealerScroreCoods = document.getElementById('countDataPoints' ).getBoundingClientRect();
       if (dealerScroreCoods.top <= -5) {
         this.showCountBubble = true;
@@ -79,10 +79,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dealingService.dealerHandReady.next(this.dealingService.getDealerScreenLocation());
   }
   addPlayers() {
-    const newPlayer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : []};
+    this.resetPlayerHands();
+    const newPlayer = {num: this.players.length, hand: [], isTurn: false, win: '',
+      isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null};
     this.players.push(newPlayer);
   }
   subtractPlayers() {
+    this.resetPlayerHands();
     this.players.pop();
   }
   gameRestart() {
@@ -90,9 +93,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.setShoots();
     this.tableReset();
     this.players = [
-      {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : []},
-      {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : []},
-      {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : []}
+      {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null},
+      {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null},
+      {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null}
     ];
     this.pastCardsLength = 0;
     this.runningCount = 0;
@@ -147,8 +150,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     this.resetPlayerHands();
     // this.resetPlayerHands();
-    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0};
+    this.dealer = {num: this.players.length, hand: [], isTurn: false, win: '', isDealer: true, count: 0, parent: null};
     this.dealerTotal = '';
+    this.currentSplits = 0;
   }
 
   async initialDeal() {
@@ -225,7 +229,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       count: 0,
       winCount: 0,
       loseCount: 0,
-      children : []
+      children : [],
+      parent: playerNum
     };
     this.isAnimationDisabled = true;
     this.players.splice(nextPlayerNum, 0, splitPlayer);
@@ -435,7 +440,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     // if running count greater than 0 find out truecount otherwise true count is zero.
     const theoreticalTrueCount =  Math.round(( this.runningCount / this.decksRemaining ) * 10) / 10;
     this.trueCount = theoreticalTrueCount;
-    this.optimalBetUnit = this.trueCount > 1 ? this.trueCount - 1 : 1;
+    this.optimalBetUnit = this.trueCount >= 2 ? Math.round((this.trueCount - 1) * 10) : 1;
     this.hasStarted = false;
     this.winnersUpdated = true;
   }
@@ -474,6 +479,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     return allBusted;
   }
 
+  playerTitle(player) {
+    let playerTitle = '';
+    this.currentSplits = 0;
+    if (player.parent !== null) {
+      playerTitle = 'Player Split';
+    } else {
+      for (let i = 0; i < player.num; i++) {
+        if (this.players[i].parent !== null) {
+          this.currentSplits++;
+        }
+      }
+      playerTitle = 'Player ' + (player.num + 1 - this.currentSplits);
+    }
+
+    return playerTitle;
+  }
+
   resetPlayerHands() {
     for ( let i = this.players.length - 1; i > -1; i--) {
       if (this.players[i].children.length > 0) {
@@ -498,7 +520,8 @@ export class AppComponent implements OnInit, AfterViewInit {
        count: 0,
        winCount: this.players[i].winCount,
        loseCount: this.players[i].loseCount,
-       children : []
+       children : [],
+       parent: null
      };
     }
   }

@@ -146,6 +146,8 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
       this.shouldStackCards = true;
       this.stackCenterPx =  (this.cardContainer.nativeElement.offsetWidth / 2) - (( this.player.hand.length) * 20);
       (this.totalBody.nativeElement as HTMLElement).style.setProperty('--stackLeftMove', this.stackCenterPx + 'px');
+    } else {
+      this.shouldStackCards = false;
     }
     return totalDisplay;
   }
