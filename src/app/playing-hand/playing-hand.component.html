@@ -26,7 +26,7 @@
         *ngFor="let card of player.hand; let i = index"
         [@cardDealing]="{value: ':enter', params: { x: xMovement, y: yMovement, rx:playerX, ry: playerY, degrees: card.dd ? 90 : 0}}"
         [ngClass]="{'over5Cards': shouldStackCards, 'doubleDown': card.dd}"
-        [ngStyle]="{'right': (i - (player.hand.length / 2))* 60 + 'px'}"
+        [ngStyle]="{'right': (i - (player.hand.length / 2))* stackOffset + 'px'}"
         class="cardimg"
         src="../../assets/cards/{{card.card}}{{card.suite}}.svg">
     </div>

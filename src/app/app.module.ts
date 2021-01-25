@@ -7,11 +7,19 @@ import { AppComponent } from './app.component';
 import { PlayingHandComponent } from './playing-hand/playing-hand.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
+import { HomeComponent } from './home/home.component';
+import { ContactComponent } from './contact/contact.component';
+import { RulesComponent } from './rules/rules.component';
+import { CountingComponent } from './counting/counting.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlayingHandComponent
+    PlayingHandComponent,
+    HomeComponent,
+    ContactComponent,
+    RulesComponent,
+    CountingComponent
   ],
   imports: [
     BrowserModule,

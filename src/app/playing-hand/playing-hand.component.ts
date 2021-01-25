@@ -91,6 +91,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
   isBust = false;
   handTotal;
   shouldStackCards = false;
+  stackOffset = 60;
   stackCenterPx = 0;
   centerCards: 0;
   showDealer = false;
@@ -110,6 +111,7 @@ export class PlayingHandComponent implements OnInit, AfterViewChecked, AfterView
     this.dealingService.sweep.subscribe(value => {
       this.removeCards();
     });
+    this.stackOffset = window.innerWidth <= 1005 ? 40 : 60;
   }
   ngAfterViewInit() {
     // center of self

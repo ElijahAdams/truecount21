@@ -1,224 +1,48 @@
-.grid-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.dealInfo {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-.dealInfo > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-width: 100px;
-  margin: 10px;
-}
-.cardData {
-  border-left: #ac2c0b solid 2px;
-  border-bottom: #ac2c0b solid 2px;
-  flex: 1;
-  align-items: flex-start;
-}
-.countData {
-  border-right: #ac2c0b solid 2px;
-  border-bottom: #ac2c0b solid 2px;
-  flex: 1;
-  align-items: flex-end;
-}
-.countDataToggle {
-  margin: 0 10px 10px 0;
-  text-align: end;
+.headerContainer {
   width: 100%;
-}
-.addPlayersContainer {
-    margin: 0 0 10px 10px;
-    text-align: start;
-    width: 100%;
-}
-.amountOfPlayers {
-  margin: 0 10px;
-}
-.dealButtonContainer {
-  flex: 1;
-  align-items: center;
-  height: 70px;
-}
-
-.cardDataPoints {
-  margin-left: 10px;
-  font-size: 24px;
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.cardDataPoints > p {
-  flex: 1;
-  text-align: start;
-  white-space: nowrap;
-}
-
-.countDataPoints {
-  margin-right: 10px;
-  font-size: 24px;
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.countDataPoints > p {
-  flex: 1;
-  text-align: end;
-  white-space: nowrap;
-}
-
-//
-//.pastRectangle {
-//  height: var(--pastHeight);
-//  width: 100px;
-//  background-color: #ac2c0b;
-//  background-image: linear-gradient(#ac2c0b, #c50aed);
-//  margin: auto;
-//}
-//.futureRectangle {
-//  height: var(--futureHeight);
-//  width: 100px;
-//  background-color: #ac2c0b;
-//  background-image: linear-gradient(#ac2c0b, #c50aed);
-//  margin: auto;
-//}
-.dealer {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.dealer > div {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  margin: 10px;
-}
-.runCountContainer {
-  flex: 1;
-}
-.trueCountContainer {
- flex: 1;
-}
-.dealerHand {
-  flex: 1;
-}
-.dealerHand {
-  border: 3px solid #152b0d;
-  border-radius: 15%;
-  min-width: 300px;
-}
-.players {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 5px;
-}
-
-.playerHand {
-    border-radius: 15%;
-    //background-color: #103310;
-    background: radial-gradient(#103310, #0d2f0d);
-    text-align: center;
-    margin: 0 10px;
-}
-
-.playerTitle {
-  font-size: 30px;
-}
-
-.dealButton {
+  height: 60px;
+  background: #103310;
   color: white;
-  background-color: transparent;
-  border: solid white 2px;
-  border-radius: 5px;
-  width: 75px;
-  height: 50px;
-  font-size: 24px;
-  margin: 10px;
-}
-
-.dealButton:hover {
-  background-color: #65a32d;
-  border: none;
-}
-
-.runningCount {
-  font-size: 130px;
-}
-
-.countStatement {
-  font-size: 30px;
-}
-.trueCountFormula{
-  font-size: 16px;
-}
-
-app-playing-hand {
-  width: 100%;
-}
-.countBubble {
-  visibility: hidden;
-  font-size: 20px;
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
-  height: 0px;
-  width: 0px;
-  background: black;
-  position: fixed;
-  right: 0;
-  bottom: 230px;
-  border-radius: 50%;
-  border: white solid 2px;
+  font-size: 40px;
+  img {
+    height: 35px;
+    margin: 0 20px;
+  }
 }
-@media(max-width: 1005px) {
-  .countBubble {
-    visibility: visible;
-    height: 100px;
-    width: 100px;
-    z-index: 99;
-  }
-  .runCountContainer {
-    order: 1;
-  }
-  .trueCountContainer {
-    order: 2;
-  }
-  .dealerHand {
-    order: 3;
-    flex: 1 1 100%;
-  }
-  .cardData {
-    flex: 1;
-    order: 1;
-  }
-  .countData {
-    flex: 1;
-    order: 2;
-  }
-  .dealButtonContainer {
-    flex: 1 1 100%;
-    order: 3;
-  }
-  .cardDataPoints {
-    flex-direction: column;
-    align-items: center;
-  }
-  .countDataPoints {
-    flex-direction: column;
-    align-items: center;
-  }
-  .countDataToggle {
-    text-align: center;
-  }
-  .addPlayersContainer {
-    text-align: center;
-  }
+.pageNameContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: default;
+}
+
+.pageName {
+  text-decoration: none;
+  color: white;
+  margin: 0 25px;
+}
+
+.pageName:hover{
+  color: yellow;
+}
+
+.smallScreenMenu {
+  position: absolute;
+  background-color: #2a852a;
+  width: 100%;
+  z-index: 10;
+  opacity: .98;
+  text-align: center;
+}
+
+.menuItem {
+  border-bottom:  white solid;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
 }

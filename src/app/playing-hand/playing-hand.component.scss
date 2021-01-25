@@ -28,7 +28,7 @@
 }
 
 .cardContainer {
-  height: 125px;
+  height: 120px;
   width: 100%;
 }
 .flexCardContainer {
@@ -73,4 +73,10 @@ button:hover {
   height: 40px;
   display: flex;
   justify-content: center;
+}
+
+@media(max-width: 1005px) {
+  .cardContainer {
+    height: 100px;
+  }
 }

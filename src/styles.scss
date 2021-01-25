@@ -13,6 +13,8 @@ html{
 
 body {
   font-family: 'Teko', sans-serif;
+  margin: 0;
+  padding-bottom: 10px;
 }
 
 p {
@@ -33,5 +35,12 @@ button {
   color: white;
 }
 
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #103310 !important;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: yellow !important;
+}
 //html, body { height: 100%; }
 //body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
