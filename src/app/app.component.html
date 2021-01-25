@@ -4,8 +4,8 @@
   </div>
   <img *ngIf="isSmallScreen" src="../assets/menu-icon.svg" (click)="toggleSmallMenu()">
 </div>
-<div *ngIf="isSmallMenuOpen" class="smallScreenMenu">
-  <div class="menuItem" *ngFor="let page of pages"><span>{{page.name}}</span></div>
+<div *ngIf="isSmallMenuOpen" class="smallScreenMenu" [@showingSmallMenu]>
+  <div class="menuItem" *ngFor="let page of pages" (click)="goToPage(page)"><span>{{page.name}}</span></div>
 </div>
 
 <router-outlet></router-outlet>

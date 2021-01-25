@@ -7,6 +7,8 @@
   justify-content: flex-end;
   align-items: center;
   font-size: 40px;
+  position: relative;
+  z-index: 11;
   img {
     height: 35px;
     margin: 0 20px;

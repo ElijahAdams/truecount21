@@ -4,11 +4,23 @@ import {DealingService} from './dealing.service';
 import {fromEvent, Observable, Subscription} from 'rxjs';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {debounceTime} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('showingSmallMenu', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)'}),
+        animate('400ms ease-in', style({transform: 'translateY(0)'}))
+      ]),
+      transition(':leave', [
+        animate('400ms ease-in', style({transform: 'translateY(-100%)'}))
+      ])
+    ]),
+  ]
 })
 export class AppComponent implements OnInit, AfterViewInit {
   pages = [
@@ -22,7 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   isMobile = false;
   resizeObs: Observable<Event>;
   resizeeSub: Subscription;
-  constructor() {
+  constructor(private router: Router) {
   }
   ngOnInit() {
     this.resizeObs = fromEvent(window, 'resize');
@@ -39,5 +51,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   toggleSmallMenu() {
     this.isSmallMenuOpen = !this.isSmallMenuOpen;
+  }
+
+  goToPage(page) {
+    this.isSmallMenuOpen = false;
+    this.router.navigateByUrl('/' + page.url);
   }
 }
