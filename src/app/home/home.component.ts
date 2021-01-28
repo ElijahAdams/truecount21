@@ -253,7 +253,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.players.splice(nextPlayerNum, 0, splitPlayer);
     this.players[playerNum].children.push(nextPlayerNum); // add splice player relationship.
     const splitCard = this.players[playerNum].hand.pop();
-    if (splitCard.value === 1) {
+    if (splitCard.card === 'A') {
       splitCard.value = 11;
       this.players[playerNum].hand[0].value = 11;
     }
@@ -390,7 +390,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.updateCardCount(this.dealer, this.dealer.hand[0]);
     }
 
-    if (this.allPlayersBust()) {
+    if (this.allPlayersBust() || this.allPlayersBlackJack()) {
       this.determineWinners();
     } else if (this.dealerTotal < 17) {
       await this.delay();
@@ -496,6 +496,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return allBusted;
   }
 
+  allPlayersBlackJack() {
+    let allBlackJack = true;
+    for (const player of this.players) {
+      if (player.hand.length > 2 ) {
+        allBlackJack = false;
+      }
+      if (player.hand.reduce(this.dealingService.addCards, {value: 0}).value !== 21 ) {
+        allBlackJack = false;
+      }
+    }
+    return allBlackJack;
+  }
   playerTitle(player) {
     let playerTitle = '';
     this.currentSplits = 0;
