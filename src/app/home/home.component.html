@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="dealInfo">
     <div class="cardData">
-      <div class="addPlayersContainer">
+      <div *ngIf="!isMobile" class="addPlayersContainer" >
         <button class="playerAddButton" [disabled]="hasStarted || players.length === 1" mat-mini-fab (click)="subtractPlayers()">
           -
         </button>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="dealButtonContainer">
-      <button *ngIf="!hasStarted" class="dealButton" (click)="startRound()">Deal</button>
+      <button [disabled]="hasStarted" class="dealButton" (click)="startRound()">Deal</button>
     </div>
     <div  class="countData">
       <div class="countDataToggle"><mat-slide-toggle [(ngModel)]="isCheckedCountHints">Count Hints</mat-slide-toggle></div>

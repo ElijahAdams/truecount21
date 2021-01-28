@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 5px;
 }
 .dealInfo {
   display: flex;
@@ -141,6 +142,11 @@
   background-color: #65a32d;
   border: none;
 }
+.dealButton:disabled {
+  background-color: #294414;
+  opacity: 0.5;
+  border: solid white 2px;
+}
 
 .runningCount {
   font-size: 130px;
@@ -173,6 +179,15 @@ app-playing-hand {
   border: white solid 2px;
 }
 @media(max-width: 1005px) {
+  .dealButtonContainer {
+    height: 50px;
+  }
+  .dealInfo {
+    margin-bottom: 0px;
+  }
+  .dealInfo > div {
+    margin: 5px;
+  }
   .countBubble {
     visibility: visible;
     height: 100px;

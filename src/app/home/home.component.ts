@@ -105,11 +105,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.populateDeck();
     this.setShoots();
     this.tableReset();
-    this.players = [
+    this.players = this.isMobile ?
+      [{num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null}]
+      :
+      [
       {num: 0, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null},
       {num: 1, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null},
       {num: 2, hand: [], isTurn: false, win: '', isDealer: false, count: 0,  winCount: 0, loseCount: 0, children : [], parent: null}
-    ];
+      ];
     this.pastCardsLength = 0;
     this.runningCount = 0;
     this.trueCount = 0;
