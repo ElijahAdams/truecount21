@@ -5,6 +5,7 @@
   <img *ngIf="isSmallScreen" src="../assets/menu-icon.svg" (click)="toggleSmallMenu()">
 </div>
 <div *ngIf="isSmallMenuOpen" class="smallScreenMenu" [@showingSmallMenu]>
+  <div class="closeBtnWrapper"><img  class="menuIcon" src="../assets/close-icon.svg" (click)="closeMenu()"></div>
   <div class="menuItem" *ngFor="let page of pages" (click)="goToPage(page)"><span>{{page.name}}</span></div>
 </div>
 

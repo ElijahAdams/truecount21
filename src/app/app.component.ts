@@ -52,6 +52,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   toggleSmallMenu() {
     this.isSmallMenuOpen = !this.isSmallMenuOpen;
   }
+  closeMenu() {
+    this.isSmallMenuOpen = false;
+  }
 
   goToPage(page) {
     this.isSmallMenuOpen = false;
