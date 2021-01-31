@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     {name: 'Home', url: 'home'},
     {name: 'Rules', url: 'rules'},
     {name: 'Counting', url: 'counting'},
-    {name: 'Contact', url: 'contact'}
+    {name: 'About/Contact', url: 'contact'}
     ];
   isSmallScreen = false;
   isSmallMenuOpen = false;

@@ -5,11 +5,13 @@
 }
 .aboutWrapper{
   width: 45%;
+  padding: 10px;
 }
 .contactWrapper {
   width: 45%;
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 .form {
   display: flex;
@@ -87,11 +89,13 @@
     width: 90%;
     display: flex;
     flex-direction: column;
+    padding: 0;
   }
   .contactWrapper {
     width: 90%;
     display: flex;
     flex-direction: column;
+    padding: 0;
   }
   .subBtn{
     width: 100%;
