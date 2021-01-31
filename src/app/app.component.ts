@@ -44,7 +44,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.isSmallScreen = window.innerWidth <= 1005 ? true : false;
       this.isSmallMenuOpen = false;
     });
-    console.log(this.isMobile + ':' + this.isSmallScreen);
   }
   ngAfterViewInit() {
   }

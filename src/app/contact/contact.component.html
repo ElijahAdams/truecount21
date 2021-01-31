@@ -1,5 +1,39 @@
 <div class="contactContainer">
-  <div class="contactWrapper">
-    <h1>Contact</h1>
-  </div>
+      <div class="aboutWrapper">
+        <h1>About</h1>
+        <p>This is how this app came to be</p>
+        <h3>Features coming soon</h3>
+        <ul>
+          <li>Ability to Bid/Bet</li>
+          <li>By the book tips on hit or stay</li>
+        </ul>
+    </div>
+    <div class="contactWrapper">
+      <h1>Contact</h1>
+      <form class="form"[formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <label for="name" >Name</label>
+        <input id="name" type="text" formControlName="name" required >
+        <div class="errorWrapper">
+          <span *ngIf="contactForm.controls.name.touched && contactForm.controls.name.errors?.required">Name Required</span>
+        </div>
+
+        <label for="email" >Email</label>
+        <input id="email"type="email" formControlName="email" required >
+        <div class="errorWrapper">
+          <span *ngIf="contactForm.controls.email.touched && contactForm.controls.email.errors?.required">Email Required</span>
+          <span *ngIf="contactForm.controls.email.touched && contactForm.controls.email.errors?.email">Enter Valid Email</span>
+        </div>
+
+        <label for="message" >Message</label>
+        <textarea id="message"  type="text" formControlName="message" required ></textarea>
+        <div class="errorWrapper">
+          <span *ngIf="contactForm.controls.message.touched && contactForm.controls.message.errors?.required">Message required</span>
+        </div>
+
+        <button class="subBtn" type="submit" [disabled]="!contactForm.valid">
+          <span *ngIf="!isSending">Send</span>
+          <span *ngIf="isSending" class="loading"></span>
+        </button>
+      </form>
+    </div>
 </div>
