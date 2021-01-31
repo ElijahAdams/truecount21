@@ -1,6 +1,82 @@
 <div class="countContainer">
   <div class="countWrapper">
-    <h1>Counting</h1>
-    <p></p>
+    <h1>Counting Cards</h1>
+    <h3>Objective</h3>
+    <p> Card counting is a casino card game strategy used primarily in the blackjack
+      family of casino games to determine whether the next hand is likely to give a
+      probable advantage to the player or to the dealer. This app teaches the basic <b>Hi-Lo</b> system.
+      <i>Card counting is not illegal but casinos reserve the rights to whom they let play at any table.</i>
+    </p>
+    <h4>Running Count (RC)</h4>
+    <p>
+      The Running count is the running total of each card's assigned value. The assigned value should not be confused
+      with the actual value of the card as related to a hands total.
+    </p>
+    <ul>
+      <li>Each Card is Assigned a value of +1, neutral(0) or -1.</li>
+      <li>Cards Ace, King, Queen, Jack, and Ten all have a values of -1.</li>
+      <li>Cards 2 to 6 all have a values of +1.</li>
+      <li>Cards 7, 8 & 9 all have a neutral(0) value.</li>
+      <li>The sum of all the +1 and -1 values of each card for each hand each for every round is the running count.</li>
+      <li>A positive running count is good for the player because it means more
+        low cards have passed so <i>face cards </i> should be on the way.
+        Face cards are bad for the dealer making them more likely to bust.</li>
+    </ul>
+    <h5>Tips</h5>
+    <ul>
+      <li>Look for <i>meaningful pairs</i> when counting.
+        A meaningful pair means the assigned values of the cards in the hand cancel out.
+        <ul>
+          <li>Example,
+            <img class="cardImg" src="../../assets/cards/4hearts.svg">
+            <img class="cardImg" src="../../assets/cards/Kspades.svg">
+            This hand adds 0 to the running count.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3>True Count (TC)</h3>
+    <p>True count is essentially the Running count divided by the number of decks that have not yet been dealt.
+      A positive true count means better odds for the player and can be used to determine to place a higher bet.</p>
+    <ul>
+      <li>True count = RC / Remaining decks</li>
+      <li>This platform calculates the remaining decks for you to the nearest tenths decimal however in the casino it will be a visual
+        approximation or it can be done mathematically by average cards per hand x players x rounds.</li>
+      <li>This platform shows TC to the tenth decimal place but it is likely best to stick to
+        rounded whole numbers in casinos for easier math.</li>
+    </ul>
+    <h3>Betting Unit (BU)</h3>
+    <p>This is a player decided bet placement that is used as the base bet throughout a game.
+      Example: A player decides 1 unit is $10. Betting unit could be the table minimum or a money
+      amount the player is comfortable with.
+    </p>
+    <h3>Optimal Bet</h3>
+    <p>Optimal bet is the best bet for a player to place for any given hand based on True count
+      Optimal bet is calculated from the true count minus betting unit.
+    </p>
+    <li>Optimal bet = TC - BU</li>
+    <li>This platform will not display a Optimal bet of less than 1 unit.
+      Based on the Hi-lo System there needs to be a true count of at least +2 for it to have any betting significance for the player,
+      therefor the platform will only update optimal bet when True count is +2 or more.
+    </li>
+    <h3>Glossory</h3>
+    <ul>
+      <li>Face Cards: Cards that have a Face instead of a number or equal 10 in value. (Ace, King, Jack, Queen, Ten)</li>
+      <li>Meaningful Pairs: The two cards in the hand have assigned values that cancel each other out.</li>
+      <li>Hi-lo System: One of many card counting strategies.</li>
+    </ul>
+  </div>
+
+  <div class="videoWrapper">
+    <h3>Video Explanation</h3>
+    <h5>It can be tough to learn counting from a wall of text so check out this video from WIRED for further explanation. </h5>
+    <iframe width="100%" height="400" src="https://www.youtube.com/embed/G_So72lFNIU"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+
+    <h4>Now that you know how to count put it to the test by <a href="home">playing</a>.
+      If you have recommendations on the app reach out <a href="/contact">here</a>.
+    </h4>
   </div>
 </div>

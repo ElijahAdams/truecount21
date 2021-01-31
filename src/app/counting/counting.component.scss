@@ -1,12 +1,20 @@
 .countContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 .countWrapper {
   width: 90%;
 }
+.videoWrapper{
+  margin-top: 30px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
+}
 @media (max-width: 1000px) {
 
 }
