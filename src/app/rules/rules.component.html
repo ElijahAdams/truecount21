@@ -1,1 +1,75 @@
-<p>rules works!</p>
+<div class="ruleContainer">
+  <div class="ruleWrapper">
+    <h1>Rules</h1>
+    <h3>Objective</h3>
+    <p>The goal of blackjack is to beat the dealer's hand without going over 21</p>
+
+    <h4>How to Play</h4>
+    <ul>
+      <li>Each player is dealt two cards at the start of the round (including the dealer).</li>
+      <li>Player's cards are publicly displayed except for the dealer. The dealer only shows 1 card until their turn.</li>
+      <li>Each card has a value associated with it that is used to determine the total of the hand.</li>
+      <li>Kings, Queens, Jacks and Tens all have a value of <b>10</b>.</li>
+      <li>9 - 2 all have the value of what is displayed on the card. (example: 7 has a value of 7)</li>
+      <li>Aces are unique with a value of 1 or 11. It becomes whichever is best for the player's hand.</li>
+      <li>
+        Example
+        <img class="cardImg" src="../../assets/cards/5spades.svg">
+        <img class="cardImg" src="../../assets/cards/Jhearts.svg">
+        This hands total is 15.
+      </li>
+      <li>Each player gets to take a turn to try and get as close to 21 or having 21 without going over.
+        <ul>
+          <li>If a player has an Ace with a card valuing 10 in their initial hand they have <b>Blackjack</b>
+            and have won unless the dealer also has Blackjack.</li>
+        </ul>
+      </li>
+      <li>During a players turn they can take a few actions. Hit, Stay, Split*, Double Down*. (All actions explained below)</li>
+      <li>After all players complete actions for their turn. The dealer gets a turn.</li>
+      <li>The dealer can only Hit or Stay. The dealer will hit anything below 17 and <i>soft</i> 17's</li>
+      <li>Once all players and the dealer complete their turns. Those with a value greater than the dealer but not over 21 win.
+        <ul>
+          <li>Hands over 21 lose and are called a <i>Bust</i>.</li>
+          <li>Players with an equal total to the dealer <i>Push</i>.</li>
+          <li>If all players bust or all have blackjack or all have combo of the two determining a definitive win or loss before the dealers turn then
+            the dealer will not take a hit regardless of their hands total.</li>
+          <li>If the dealer has blackjack on the initial deal the round is over an winners will be determined immediately.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h5>Player Actions</h5>
+    <ul>
+      <li>Hit: player receives another card from the <i>Shoe</i></li>
+      <li>Stay: player has completed their turn on that hand </li>
+      <li>Split*: player must have the same card for booth initial cards to be able to split.
+        When splitting the player's hand becomes two hands each hand will have one of the original
+        split cards and get a new card from the shoe. The player then plays out both hands.
+        <ul>
+          <li>Split Aces only get one new card from the shoe. Split aces cannot be hit again.</li>
+        </ul>
+      </li>
+      <li>DoubleDown*: player must have an initial hand totaling to 10 or 11. (This is not a rule across all casinos)
+        When a player doubles down they increase their bet by equal or lesser value of the original bet and they
+        only receive one hit card which completes their turn. </li>
+    </ul>
+
+    <h3>Things Worth Mentioning</h3>
+    <ul>
+      <li>There are 52 cards in a deck. 4 cards of each value. 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King, Ace</li>
+      <li>Most Casinos play BlackJack with 6 decks of cards so that is true for this platform</li>
+      <li></li>
+    </ul>
+
+
+    <h3>Glossory</h3>
+    <ul>
+      <li>Soft: A hand with an ace valued as 11 is called "soft", meaning that
+        the hand will not bust by taking an additional card. </li>
+      <li>Shoe: A physical card holder utilized in Casinos to hold cards to pull from to deal to players.</li>
+      <li>Bust: When a players hand is over 21. </li>
+      <li>Push: When the players hand total is equal to the dealers hand total.</li>
+    </ul>
+    <h3>Now that you know all of this go <a href="home">play</a> or learn how to <a href="/counting">count</a></h3>
+  </div>
+</div>

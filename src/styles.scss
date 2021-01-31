@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap');
 :root {
   --futureHeight: 0;
   --pastHeight: 0;
@@ -44,3 +44,11 @@ button {
 }
 //html, body { height: 100%; }
 //body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h1, h2, h3, h4, h5, p {
+  font-weight: normal;
+}
+
+.cardImg {
+  height: 100px;
+}

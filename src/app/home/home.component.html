@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="dealInfo">
     <div class="cardData">
-      <div *ngIf="!isMobile" class="addPlayersContainer" >
+      <div class="addPlayersContainer" >
         <button class="playerAddButton" [disabled]="hasStarted || players.length === 1" mat-mini-fab (click)="subtractPlayers()">
           -
         </button>
@@ -17,6 +17,7 @@
       </div>
     </div>
     <div class="dealButtonContainer">
+      <span style="font-size: 22px">Learn to count cards in BlackJack</span>
       <button [disabled]="hasStarted" class="dealButton" (click)="startRound()">Deal</button>
     </div>
     <div  class="countData">
