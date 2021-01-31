@@ -48,7 +48,67 @@ button {
 h1, h2, h3, h4, h5, p {
   font-weight: normal;
 }
+h1 {
+  font-size: 50px;
+  text-decoration: underline;
+  margin: 25px 0;
+}
+h3 {
+  font-size: 40px;
+  margin: 8px 0;
+}
+h4 {
+  font-size: 35px;
+  margin: 5px 0;
+}
+h5 {
+  font-size: 30px;
+  margin: 5px 0;
+}
+p {
+  font-size: 25px;
+}
+ul {
+  margin: 0;
+}
+li {
+  font-size: 22px;
+}
 
 .cardImg {
   height: 100px;
 }
+
+@media (max-width: 1000px) {
+  .cardImg {
+    height: 80px;
+  }
+  h1 {
+    font-size: 40px;
+    text-decoration: underline;
+    margin: 15px 0;
+    font-weight: normal;
+  }
+  h3 {
+    font-size: 30px;
+    margin: 8px 0;
+  }
+  h4 {
+    font-size: 25px;
+    margin: 5px 0;
+  }
+  h5 {
+    font-size: 22px;
+    margin: 5px 0;
+  }
+  p {
+    font-size: 20px;
+  }
+  ul {
+    margin: 0;
+  }
+  li {
+    font-size: 18px;
+  }
+}
+

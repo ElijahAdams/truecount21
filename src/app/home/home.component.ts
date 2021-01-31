@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {DealingService} from '../dealing.service';
 import {fromEvent} from 'rxjs';
@@ -19,7 +19,7 @@ import {fromEvent} from 'rxjs';
     ]),
   ]
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   /* Black jack dealing order
     1. deal 1 card to players first face up.
     2. deal 1 card to dealer face down
@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showCountBubble = false;
   currentSplits = 0;
   isMobile = false;
+  windowScroll;
   @ViewChild('dealerHand', {static: false}) dealerHand: ElementRef;
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -74,9 +75,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
     this.populateDeck();
     this.setShoots();
-    fromEvent(window, 'scroll').subscribe(e => {
-      const dealerScroreCoods = document.getElementById('countDataPoints' ).getBoundingClientRect();
-      if (dealerScroreCoods.top <= -5) {
+    this.windowScroll = fromEvent(window, 'scroll').subscribe(e => {
+      const dealerScoreCoods = document.getElementById('countDataPoints' ).getBoundingClientRect();
+      if (dealerScoreCoods.top <= -5) {
         this.showCountBubble = true;
       } else {
         this.showCountBubble = false;
@@ -553,5 +554,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
         parent: null
       };
     }
+  }
+
+  ngOnDestroy() {
+    this.windowScroll.unsubscribe();
   }
 }
